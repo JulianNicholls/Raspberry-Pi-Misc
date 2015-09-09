@@ -1,3 +1,3 @@
 # Raspberry-Pi-Misc
 
-Files from my initial frays into the [Raspberry Pi](http://raspberrypi.org).
+Files from my initial forays into programming for the [Raspberry Pi](http://raspberrypi.org).
