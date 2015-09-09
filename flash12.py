@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 red_pin     = 12    # Pin Number, GPIO 18
-delay       = 0.5   # second
+delay       = 0.2   # second
 
 # Set up pin for output
 
@@ -23,7 +23,7 @@ def flash_led(pin, delay):
     led_on(pin, delay)
     led_off(pin, delay)
 
-for i in range(3):
+for i in range(6):
     flash_led(red_pin, delay)
 
 GPIO.cleanup()
