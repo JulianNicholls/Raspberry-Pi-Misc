@@ -24,10 +24,12 @@ delay is sensible.
 
 A driver library for LCD displays attached to GPIO pins in a 4-bit configuration
 (see comments for connection details).
-When run directly, it starts by initializing the panel and 
-writing 'SETUP'. Then it waits for the user to hit enter between each of the 
-next phases: position the cursor to the beginning of the second line and write 
-'Second Line', then write 'End' at the end of the second line, then the cursor is 
+
+When run directly, it starts by initializing the panel and writing 'SETUP'.
+Then it waits for the user to hit enter between each of the next phases:
+position the cursor to the beginning of the second line and write 
+'Second Line', then write 'End' at the end of the second line, after which
+the cursor is 
 shown, hidden, and set blinking before finally waiting for the user to hit enter 
 again and then disconnecting from GPIO.
 
