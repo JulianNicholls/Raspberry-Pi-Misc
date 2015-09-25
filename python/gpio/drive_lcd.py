@@ -39,6 +39,8 @@ BLINKING    = 0x07
 # 4-bit operation
 
 def setup():
+    # Initialise GPIO Pins.
+
     GPIO.setmode(GPIO.BOARD)
 
     GPIO.setup(rs_pin, GPIO.OUT)
@@ -48,22 +50,24 @@ def setup():
     GPIO.setup(db6_pin, GPIO.OUT)
     GPIO.setup(db7_pin, GPIO.OUT)
 
+    # Set up LCD interface
+
     write_4_ins(2)
     write_4_ins(2)
     write_4_ins(8)      # 2-line, 5x7
-    time.sleep(0.01)
+    time.sleep(0.002)
     
     write_4_ins(0)
     write_4_ins(0xE)    # Display on, cursor on, blink off
-    time.sleep(0.01)
+    time.sleep(0.002)
 
     write_4_ins(0)      # Clear display
     write_4_ins(1)
-    time.sleep(0.01)
+    time.sleep(0.002)
 
     write_4_ins(0)
     write_4_ins(6)      # Increment on, shift off
-    time.sleep(0.01)
+    time.sleep(0.002)
 
 def release_pins():
     GPIO.cleanup()
@@ -81,10 +85,11 @@ def home():
 def set_cursor(setting):
     write_8_ins(0x08 + setting)
 
-# Set the cursor position by row and column, this only works for 16x2 and 20x2
-# at the moment because I don't have a 16x4 or 20x4 LCD, or the docs. I recall 
-# that line 2 runs on from line 0, and line 3 runs on from line 1, but I don't
-# remember whether there is any gap in addressing.
+# Set the cursor position by row and then column, this only works for sure on
+# 16x2 and 20x2 displays at the moment because I don't have a 16x4 or 20x4 LCD,
+# or the docs.
+# I recall that line 2 runs on from line 0, and line 3 runs on from line 1,
+# but I don't remember whether there is any gap in addressing.
 
 def set_position(y, x):
     set_address_raw(y * 0x40 + x)
@@ -108,7 +113,7 @@ def write_8_ins(value):
     write_4_ins(value >> 4)
     write_4_ins(value & 0x0F)
 
-# Write a 4-bit value as an instruction.
+# Write a 4-bit value as an instruction (RS low).
 
 def write_4_ins(value):
     write_4(value)
@@ -123,7 +128,7 @@ def write_8_data(value):
     write_4_data(value >> 4)
     write_4_data(value & 0x0F)
 
-# Write a 4-bit value as a piece of data (text).
+# Write a 4-bit value as a piece of data (text) (RS high).
 
 def write_4_data(value):
     write_4(value)
@@ -139,14 +144,17 @@ def write_4(value):
     GPIO.output(db7_pin, GPIO.HIGH if ((value & 8) == 8) else GPIO.LOW)
 
 # Strobe the E line high for a minimum of 500ns. As can be seen, it is held
-# high for 1ms.
+# high for 500us. It seems that asking for 500us from time.sleep() is fairly
+# reasonable (see test_sleep.py for testing).
 
 def strobe_e():
-    time.sleep(0.001)  # Limit is min 500ns, so this is plenty
+    time.sleep(0.0005)  # Limit is min 500ns, so this (500us) is plenty
     GPIO.output(e_pin, GPIO.HIGH)
-    time.sleep(0.001)  # Limit is min 500ns, so this is plenty
+    time.sleep(0.0005)
     GPIO.output(e_pin, GPIO.LOW)
-    time.sleep(0.001)  # Limit is min 500ns, so this is plenty
+    time.sleep(0.0005)
+
+
 
 if __name__ == '__main__':
     setup()
@@ -157,14 +165,6 @@ if __name__ == '__main__':
     write_8_data(0x55)  # 'U'
     write_8_data(0x50)  # 'P'
     wait = raw_input()
-    
-#    clear()
-#    say("Clear");
-#    wait = raw_input()
-    
-#    home()
-#    say("Home...");
-#    wait = raw_input()
     
     clear()
     set_address_raw(0x40)
