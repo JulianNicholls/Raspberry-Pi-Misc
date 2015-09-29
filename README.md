@@ -2,6 +2,7 @@
 
 Files from my initial forays into programming for the [Raspberry Pi](http://raspberrypi.org).
 
+
 ## c
 
 Use make to build the programs in here.
@@ -12,6 +13,7 @@ Uses the PWM pin, physical pin 12 - GPIO18. The clock divisor, range, and duty
 cycle value can all be set from a menu. Has been tried with an LED and a speaker,
 presumably with relevant values it would drive a servo, although that would 
 require somne amplification.
+
 
 ## python
 
@@ -56,6 +58,17 @@ Displays a clock on the first line of a connected LCD display using the drive_lc
 library. See drive_lcd for the connection details. It ensures that it always
 releases the GPIO pins by having a try...except round the main loop to trap Ctrl-C
 
+### drive_7_segment
+
+Drive a seven segment, common-anode, display. Connections can be seen inside
+the file. Currently set up for B+, assuming a 40-pin GPIO. Shows 0-9 with a 
+delay between each, and then shows each letter and waits for the user to press 
+enter.
+
+The simplest way to change to a common-cathode display would be to swap the names
+of segment_on() and segment_off().
+
+
 ## python/pygame
 
 Adventures in game programming.
@@ -68,6 +81,7 @@ Bounce a (square!) ball around in a window.
 
 Bounce a ball around in a box with a bouncy sound on each bounce. Use the cursor
 keys to expand and contract the square that the ball is bouncing in.
+
 
 ## scratch
 
