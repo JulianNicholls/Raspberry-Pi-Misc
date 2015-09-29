@@ -68,6 +68,11 @@ enter.
 The simplest way to change to a common-cathode display would be to swap the names
 of segment_on() and segment_off().
 
+### traffic_lights
+
+Simulate a (British) set of traffic lights with a Red, Amber, and Green LED 
+connected to pins 11, 13, and 15 respectively.
+
 
 ## python/pygame
 
