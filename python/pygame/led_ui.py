@@ -7,16 +7,27 @@ UI
 import pygame
 
 pygame.init()
+
 pygame.display.set_caption("LED UI")
 
 window_size = (600, 600)
 
 screen = pygame.display.set_mode(window_size)
 
-blue = (0, 0, 80)
+# Colours
 
-# screen = pygame.display.set_mode([screenWidth, screenHeight], 0, 32)
-# background = pygame.Surface((screenWidth, screenHeight))
+blue  = (0, 0, 64)
+white = (255, 255, 255)
+black = (0, 0, 0) 
+
+# Font
+
+font = pygame.font.Font(None, 64)
+
+# Rectangle
+
+x, y = 0, 0
+w, h = 200, 200
 
 # Event Loop
 
@@ -31,5 +42,16 @@ while running:
         print("Mouse moved to (%d, %d)" % event.pos)
 
     screen.fill(blue)
+    pygame.draw.rect(screen, white, (x, y, w, h)) # Border is , 1)
+
+    text_surface = font.render('%d, %d' % (x, y), 1, black)
+    text_pos = (x + 10, y + 10)
+
+    screen.blit(text_surface, text_pos)
+
+    if x < window_size[1] - w:
+        x += 1
+        y += 1
+
     pygame.display.flip()
 
