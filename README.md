@@ -12,7 +12,7 @@ Use make to build the programs in here.
 Uses the PWM pin, physical pin 12 - GPIO18. The clock divisor, range, and duty
 cycle value can all be set from a menu. Has been tried with an LED and a speaker,
 presumably with relevant values it would drive a servo, although that would 
-require somne amplification.
+require some amplification.
 
 
 ## python

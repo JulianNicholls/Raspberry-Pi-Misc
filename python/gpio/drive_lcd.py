@@ -20,8 +20,8 @@ import time
 
 #   GPIO Pins used
 
-rs_pin  = 26    # RS !INS/DATA
-e_pin   = 24    # E
+rs_pin  = 26    # RS _INS/DATA
+e_pin   = 24    # E Strobe
 
 db4_pin = 12    # DB4
 db5_pin = 16    # DB5

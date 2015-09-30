@@ -19,8 +19,8 @@ pygame.display.set_caption("Bounce 2, with sound")
 screenWidth  = 400
 screenHeight = 400
 
-screen = pygame.display.set_mode([screenWidth, screenHeight], 0, 32)
-background = pygame.Surface((screenWidth, screenHeight))
+screen      = pygame.display.set_mode([screenWidth, screenHeight], 0, 32)
+background  = pygame.Surface((screenWidth, screenHeight))
 
 # Define the colours
 
@@ -29,8 +29,8 @@ cBlock = (0, 0, 0)
 background.fill(cBackground)
 box = [screenWidth - 40, screenHeight - 40]
 delta = [5, 10]
-hw = screenWidth / 2
-hh = screenHeight / 2
+hw = screenWidth // 2
+hh = screenHeight // 2
 position = [hw, hh]
 limit = [0, 0, 0, 0]
 ballRad = 8
@@ -87,13 +87,13 @@ def updateBox(d, amount):
 
     box[d] += amount
 
-    limit[0] = hw - box[0] / 2 + ballRad  # Left
-    limit[1] = hw + box[0] / 2 - ballRad  # Right
-    limit[2] = hh - box[1] / 2 + ballRad  # Top
-    limit[3] = hh + box[1] / 2 - ballRad  # Right
+    limit[0] = hw - box[0] // 2 + ballRad  # Left
+    limit[1] = hw + box[0] // 2 - ballRad  # Right
+    limit[2] = hh - box[1] // 2 + ballRad  # Top
+    limit[3] = hh + box[1] // 2 - ballRad  # Right
 
 def terminate():
-    print "Closing down, please wait..."
+    print("Closing down, please wait...")
     pygame.quit()
     sys.exit()
 
@@ -119,4 +119,3 @@ def checkForEvent():
 
 if __name__ == '__main__':
     main()
-
