@@ -10,9 +10,11 @@ Use make to build the programs in here.
 ### pwm
 
 Uses the PWM pin, physical pin 12 - GPIO18. The clock divisor, range, and duty
-cycle value can all be set from a menu. Has been tried with an LED and a speaker,
-presumably with relevant values it would drive a servo, although that would 
-require some amplification.
+cycle value can all be set from a menu. It has been tried with an LED, a
+speaker, and a 6V motor connected to the collector side of a PN2222 transistor.
+
+Presumably, with relevant values, it would drive a servo, requiring a transistor
+for switching a higher voltage again.
 
 
 ## python
@@ -73,10 +75,17 @@ of segment_on() and segment_off().
 Simulate a (British) set of traffic lights with a Red, Amber, and Green LED 
 connected to pins 11, 13, and 15 respectively.
 
+### motor
+
+Turn a motor on and off connected to pin 12 via PN2222 transistor. I wrote this
+so that I could turn the motor off quickly in case I'd made a bad choice of 
+transistor or anotehr schoolboy error. The motor is connected to the collector, 
+and powered by a wall-wart providing 6V, but I initially tried it with the 5V
+line (pin 2) on the GPIO and that was fine too. 
 
 ## python/pygame
 
-Adventures in game programming.
+Adventures in game / UI programming.
 
 ### bounce1
 
@@ -86,6 +95,11 @@ Bounce a (square!) ball around in a window.
 
 Bounce a ball around in a box with a bouncy sound on each bounce. Use the cursor
 keys to expand and contract the square that the ball is bouncing in.
+
+### led_ui
+
+Display 6 buttons that turn LEDs on and off. Because the traffic light LEDs were
+still connected, I chose to use those.
 
 
 ## scratch
