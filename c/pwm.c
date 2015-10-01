@@ -27,6 +27,17 @@
 const int       PWM_PIN     = 1;
 const double    BASE_CLOCK  = 19.2e6;
 
+const char*     modes[]     = {"Balanced", "Mark / Space"};
+
+/****************************************************************************
+ * Clock Frequency
+ */
+
+double frequency(int clock, int range)
+{
+    return (BASE_CLOCK / clock) / range;
+}
+
 /****************************************************************************
  * Menu
  */
@@ -40,17 +51,23 @@ void menu(void)
     int choice  = 0;
     int delta;
 
+// Set up initial values
+
+    pwmSetMode(PWM_MODE_MS);
+    pwmSetRange(range);
+    pwmSetClock(clock);
+    pwmWrite(PWM_PIN, duty);
+
     while(1)
     {
         clrscr();
 
         printf("\n          Pulse Width Modulation demonstration\n\n");
-        printf("    1 - Fade in and out\n");
-        printf("    2 - Toggle PWM mode:    %s\n", (mode == 0) ? "Balanced" : "Mark / Space");
-        printf("    3 - Set Duty Range:     %d\n", range);
-        printf("    4 - Set Clock Divisor:  %d, Frequency: %.3f Hz\n",
-               clock, ((BASE_CLOCK / clock) / range));
-        printf("    5 - Set Duty Cycle:     %d\n", duty);
+        printf("    1 - Toggle PWM mode:    %s\n", modes[mode]);
+        printf("    2 - Set Duty Range:     %d\n", range);
+        printf("    3 - Set Clock Divisor:  %d, Frequency: %.3f Hz\n", clock, frequency(clock, range));
+        printf("    4 - Set Duty Cycle:     %d\n", duty);
+        printf("    5 - Fade in and out\n");
         printf("    6 - Exit\n\n");
         printf("        Enter selection: ");
 
@@ -59,31 +76,13 @@ void menu(void)
         switch(choice)
         {
             case 1:
-                delta = 1;
-                
-                printf("\n\nDuty Value\n");
-
-                for(int value = 0; value >= 0; value += delta)
-                {
-                    pwmWrite(PWM_PIN, value);
-                    printf(" %5d\r", value);
-                    delay(5);
-                    if(value >= range)
-                        delta = -1;
-                }
-
-                pwmWrite(PWM_PIN, 0);
-                duty = 0;
-                break;
-
-            case 2:
                 mode = !mode;
 
                 pwmSetMode((mode == 0) ? PWM_MODE_BAL : PWM_MODE_MS);
                 pwmWrite(PWM_PIN, duty);
                 break;
 
-            case 3:
+            case 2:
                 printf("\n\n        Enter the Duty Cycle steps (1-4096): ");
                 scanf("%d", &range);
                 pwmSetRange(range);
@@ -94,25 +93,53 @@ void menu(void)
                 pwmWrite(PWM_PIN, duty);
                 break;
 
-            case 4:
-                printf("\n\n        Enter the Clock (2-4095): ");
+            case 3:
+                printf("\n\n        Enter the Clock Divisor (2-4095): ");
                 scanf("%d", &clock);
 
-                if(clock > 4095)    // Limit the clock divisor to 12 bits
+                // Constrain the entered value to the range 2 to 4095.
+
+                if(clock < 2)
+                    clock = 2;
+
+                if(clock > 4095)
                     clock = 4095;
 
                 pwmSetClock(clock);
+                break;
+
+            case 4:
+                printf("\n\n        Enter the Duty Cycle: ");
+                scanf("%d", &duty);
+
+                // Constrain the value to the allowable range
+
+                if(duty < 1)
+                    duty = 0;
+
+                if(duty > range)
+                    duty = range;
+
                 pwmWrite(PWM_PIN, duty);
                 break;
 
             case 5:
-                printf("\n\n        Enter the Duty Cycle: ");
-                scanf("%d", &duty);
+                delta = 1;
+                
+                printf("\n\nDuty Value\n");
 
-                if(duty > range)    // Limit the entered value to the range
-                    duty = range;
+                for(int value = 0; value >= 0; value += delta)
+                {
+                    pwmWrite(PWM_PIN, value);
+                    printf(" %5d\r", value);
+                    delay(5);   // 5ms
 
-                pwmWrite(PWM_PIN, duty);
+                    if(value >= range)
+                        delta = -1;
+                }
+
+                pwmWrite(PWM_PIN, 0);
+                duty = 0;
                 break;
 
             case 6:
@@ -126,7 +153,7 @@ int main(void)
 {
     wiringPiSetup();
     pinMode(PWM_PIN, PWM_OUTPUT);
-    pwmSetMode(PWM_MODE_MS);         // Much more useful than the default
+
     menu();
 
     return 0;
