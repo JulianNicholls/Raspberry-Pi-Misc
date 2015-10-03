@@ -105,8 +105,8 @@ keys to expand and contract the square that the ball is bouncing in.
 
 ### led_ui
 
-Display 6 buttons that turn LEDs on and off. Because the traffic light LEDs were
-still connected, I chose to use those.
+Display 3 buttons that turn LEDs on and off. Because the traffic light LEDs were
+still connected, I chose to use those. The buttons now show the state of the LEDs.
 
 
 ## scratch
