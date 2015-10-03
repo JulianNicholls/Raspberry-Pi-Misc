@@ -58,14 +58,16 @@ the user to hit enter again and then disconnecting from GPIO.
 
 Displays a clock on the first line of a connected LCD display using the drive_lcd
 library. See drive_lcd for the connection details. It ensures that it always
-releases the GPIO pins by having a try...except round the main loop to trap Ctrl-C
+releases the GPIO pins by having a try...except round the main loop to trap Ctrl-C.
 
 ### drive_7_segment
 
 Drive a seven segment, common-anode, display. Connections can be seen inside
-the file. Currently set up for B+, assuming a 40-pin GPIO. Shows 0-9 with a 
-delay between each, and then shows each letter and waits for the user to press 
-enter.
+the file. Currently set up for B+, assuming a 40-pin GPIO.
+
+First it shows 0-9A-F with a delay between each. Then, it shows 6 arrows pointing
+forward and back, right and left. Finally, it shows each possible letter and waits 
+for the user to press enter.
 
 The simplest way to change to a common-cathode display would be to swap the names
 of segment_on() and segment_off().
@@ -79,9 +81,14 @@ connected to pins 11, 13, and 15 respectively.
 
 Turn a motor on and off connected to pin 12 via PN2222 transistor. I wrote this
 so that I could turn the motor off quickly in case I'd made a bad choice of 
-transistor or anotehr schoolboy error. The motor is connected to the collector, 
+transistor or another schoolboy error. The motor is connected to the collector, 
 and powered by a wall-wart providing 6V, but I initially tried it with the 5V
 line (pin 2) on the GPIO and that was fine too. 
+
+it turns out that my choice of transistor was OK. With pin 12 connected via a 
+1.26k resistor to the Base of the transistor, I'm drawing 2mA from the Pi.
+The motor is drawing around 120mA when running freely. I'm going to try
+stalling the motor a little to test its maximum draw.
 
 ## python/pygame
 
