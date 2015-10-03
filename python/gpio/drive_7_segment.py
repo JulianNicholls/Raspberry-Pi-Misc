@@ -1,12 +1,16 @@
 import RPi.GPIO as GPIO
 import time
 
-#     a
-#    ---
-# b | g | c
-#    ---
-# d | f | e
-#    ---
+#        a(7)
+#       ------
+# (6)b | g(3) | c(8)
+#       ------
+# (4)d |      | e(1)
+#       ------
+#        f(2)
+#
+# Pin 5 is connected to segments c & e of another display, which has the same
+# common anode.
 
 #          a   b   c   d   e   f   g
 pins    = [16, 22, 12, 18, 32, 38, 36 ]
