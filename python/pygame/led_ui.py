@@ -9,6 +9,29 @@ import pygame
 import RPi.GPIO as gpio
 
 
+class Button(object):
+    def __init__(self, x, y, pin, text, colour, width = 200, height = 100):
+        self.x      = x
+        self.y      = y
+        self.pin    = pin
+        self.text   = text
+        self.colour = colour
+        self.width  = width
+        self.height = height
+        self.active = False
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.colour if self.active else off, (self.x, self.y, self.width, self.height))
+
+        text_surface = button_font.render(self.text, 1, black if self.active else white) 
+        screen.blit(text_surface, (self.x + 20, self.y + 30))
+
+    def clicked(self, pos):
+        return pos[0] >= self.x and pos[0] < self.x + self.width and \
+               pos[1] >= self.y and pos[1] < self.y + self.height
+
+
+
 pygame.init()
 
 # Sizes and stuff
@@ -43,15 +66,21 @@ STATE       = 1
 NAME        = 2
 COLOUR      = 3
 
-pins = [[red_pin, 0, 'Red', red], [amber_pin, 0, 'Amber', amber], [green_pin, 0, 'Green', green]]
+buttons    = [
+    Button( 20, 20, red_pin,   'Red',   red),
+    Button(240, 20, amber_pin, 'Amber', amber),
+    Button(460, 20, green_pin, 'Green', green)
+]
+
+pins = [red_pin, amber_pin, green_pin]
 
 # Set up pins for output
 
 gpio.setmode(gpio.BOARD)
 
 for pin in pins:
-    gpio.setup(pin[GPIO], gpio.OUT)
-    gpio.output(pin[GPIO], gpio.LOW)
+    gpio.setup(pin, gpio.OUT)
+    gpio.output(pin, gpio.LOW)
 
 # Turn the LED on or off
 
@@ -61,24 +90,17 @@ def led_on(pin, delay = 0):
 def led_off(pin, delay = 0):
     gpio.output(pin, gpio.LOW)
 
-# Return the button indices
-
-def button_pressed(pos):
-    x_pos = (pos[0] - 20) // 220
-
-    return x_pos
-
 # Set the specified LED on or off.
 
-def set_led(index):
-    pin = pins[index]
+def set_led(button):
+    pin = button.pin
 
-    if pin[STATE] == OFF: 
-        led_on(pin[GPIO])
-        pin[STATE] = ON
+    if button.active: 
+        led_off(pin)
     else:
-        led_off(pin[GPIO])
-        pin[STATE] = OFF
+        led_on(pin)
+
+    button.active = not button.active
 
 pygame.display.set_caption("LED UI V2")
 
@@ -87,7 +109,6 @@ screen = pygame.display.set_mode(window_size)
 # Event Loop
 
 running = True
-last_index = -1
 
 while running:
     event = pygame.event.poll()
@@ -95,21 +116,15 @@ while running:
     if event.type == pygame.QUIT:
         running = False
     elif event.type == pygame.MOUSEBUTTONDOWN:
-        last_index = button_pressed(event.pos)
+        for b in buttons:
+            if b.clicked(event.pos):
+                set_led(b)
+                break
 
     screen.fill(blue)
 
-    for x in range(3):
-        x_pos = x * 220 + 20
-        on = pins[x][STATE] == ON
-        pygame.draw.rect(screen, pins[x][COLOUR] if on else off, (x_pos, 20, 200, 100))
-
-        text_surface = button_font.render(pins[x][NAME], 1, black if on else white) 
-        screen.blit(text_surface, (x_pos + 20, 50))
-
-    if last_index != -1:
-        set_led(last_index)
-        last_index = -1
+    for b in buttons:
+        b.draw(screen)
 
     pygame.display.flip()
 
