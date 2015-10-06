@@ -14,6 +14,8 @@ import RPi.GPIO as gpio
 red_pin     = 11    # Pin Number, GPIO 17
 amber_pin   = 13    # Pin Number, GPIO 27
 green_pin   = 15    # Pin Number, GPIO 22
+blue_pin    = 29    # Pin Number, GPIO 5    
+white_pin   = 31    # Pin Number, GPIO 6
 
 # 7-segment pins (See drive_7_segment.py for more details)
 #              a   b   c   d   e   f   g   p5
@@ -21,7 +23,7 @@ pins7       = [16, 22, 12, 18, 32, 38, 36, 35]
 
 # Sizes and stuff
 
-window_size = (680, 620)
+window_size = (750, 620)
 
 # Colours
 
@@ -32,6 +34,7 @@ off     = (32, 32, 32)
 red     = (255, 50, 50)
 amber   = (255, 255, 50)
 green   = (50, 255, 50)
+lblue   = (50, 50, 255)
 
 
 #----------------------------------------------------------------------------
@@ -87,11 +90,12 @@ class Button(object):
         """ NULL Action """
         pass
 
+
 #----------------------------------------------------------------------------
 # PinButton Class that holds a Pin reference and draws based on it.
 
 class PinButton(Button):
-    def __init__(self, x, y, pin, text, colour, width = 200, height = 100, x_offset = 50, y_offset = 30):
+    def __init__(self, x, y, pin, text, colour, width, height, x_offset, y_offset):
         super().__init__(x, y, text, colour, width, height, x_offset, y_offset) 
 
         self.pin = pin
@@ -107,13 +111,14 @@ class PinButton(Button):
         """ Toggle the pin state """
         self.pin.toggle()
 
+
 #----------------------------------------------------------------------------
 # Initialisation functions
 
 def initialise_gpio():
     gpio.setmode(gpio.BOARD)
 
-    led_pins = [red_pin, amber_pin, green_pin]
+    led_pins = [red_pin, amber_pin, green_pin, blue_pin, white_pin]
     
     for pin in led_pins:
         gpio.setup(pin, gpio.OUT)
@@ -130,24 +135,29 @@ def initialise_window():
     pygame.display.set_caption("LED UI V2")
 
 
+#----------------------------------------------------------------------------
+# Main
+
 initialise_gpio()
 initialise_window()
 
 screen      = pygame.display.set_mode(window_size)
-button_font = pygame.font.Font(None, 48)
+button_font = pygame.font.Font(None, 36)
 
 buttons     = [
-    PinButton( 20,  20, Pin(red_pin),   'Red',   red,   200, 100, 60, 30),
-    PinButton(240,  20, Pin(amber_pin), 'Amber', amber, 200, 100, 50, 30),
-    PinButton(460,  20, Pin(green_pin), 'Green', green, 200, 100, 50, 30),
+    PinButton( 20,  20, Pin(red_pin),   'Red',   red,   120, 75, 30, 22),
+    PinButton(160,  20, Pin(amber_pin), 'Amber', amber, 120, 75, 22, 22),
+    PinButton(300,  20, Pin(green_pin), 'Green', green, 120, 75, 22, 22),
+    PinButton(440,  20, Pin(blue_pin),  'Blue',  lblue, 120, 75, 25, 22),
+    PinButton(580,  20, Pin(white_pin), 'White', white, 120, 75, 22, 22),
 
-    PinButton( 50, 150, Pin(pins7[0], False, True), 'a', red, 150,  35, 60,  -2),
-    PinButton( 33, 195, Pin(pins7[1], False, True), 'b', red,  35, 150,  7, 50),
-    PinButton(188, 195, Pin(pins7[2], False, True), 'c', red,  35, 150,  7, 50),
-    PinButton( 50, 355, Pin(pins7[6], False, True), 'g', red, 150,  35, 60,  -5),
-    PinButton( 33, 400, Pin(pins7[3], False, True), 'd', red,  35, 150,  7, 50),
-    PinButton(188, 400, Pin(pins7[4], False, True), 'e', red,  35, 150,  7, 50),
-    PinButton( 50, 560, Pin(pins7[5], False, True), 'f', red, 150,  35, 64,  -1),
+    PinButton( 50, 150, Pin(pins7[0], False, True), 'a', red, 150,  30, 60,  0),
+    PinButton( 35, 190, Pin(pins7[1], False, True), 'b', red,  30, 150,  7, 50),
+    PinButton(190, 190, Pin(pins7[2], False, True), 'c', red,  30, 150,  7, 50),
+    PinButton( 50, 350, Pin(pins7[6], False, True), 'g', red, 150,  30, 60,  0),
+    PinButton( 35, 390, Pin(pins7[3], False, True), 'd', red,  30, 150,  7, 50),
+    PinButton(190, 390, Pin(pins7[4], False, True), 'e', red,  30, 150,  7, 50),
+    PinButton( 50, 550, Pin(pins7[5], False, True), 'f', red, 150,  30, 64,  0),
 ]
 
 # Event Loop
