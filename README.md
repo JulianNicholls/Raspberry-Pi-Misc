@@ -7,6 +7,7 @@ Files from my initial forays into programming for the [Raspberry Pi](http://rasp
 
 Use make to build the programs in here.
 
+
 ### pwm
 
 Uses the PWM pin, physical pin 12 - GPIO18. The clock divisor, range, and duty
@@ -25,6 +26,7 @@ General python programs.
 
 Test the resolution of time.sleep(). It appears to be about 100us (microseconds),
 which is an order of magnitude (or more) better than I expoected.
+
 
 ## python/gpio
 
@@ -90,6 +92,7 @@ it turns out that my choice of transistor was OK. With pin 12 connected via a
 The motor is drawing around 120mA when running freely. I'm going to try
 stalling the motor a little to test its maximum draw.
 
+
 ## python/pygame
 
 Adventures in game / UI programming.
@@ -103,10 +106,13 @@ Bounce a (square!) ball around in a window.
 Bounce a ball around in a box with a bouncy sound on each bounce. Use the cursor
 keys to expand and contract the square that the ball is bouncing in.
 
-### led_ui
 
-Display 3 buttons that turn LEDs on and off. Because the traffic light LEDs were
-still connected, I chose to use those. The buttons now show the state of the LEDs.
+## python/pygame/led_ui
+
+Display buttons that turn LEDs on and off. Five buttons turn directly connected
+LEDs on and off. Another seven buttons turn the segments of a display on and off.
+
+See main.py and .../gpio/drive_7_segment for full connection details.
 
 
 ## scratch
