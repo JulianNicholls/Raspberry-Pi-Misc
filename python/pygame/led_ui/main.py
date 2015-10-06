@@ -94,18 +94,22 @@ buttons     = [
     PinButton(190, 390, 'e', button_font, red, off,  30, 150,  7, 50, pins7[4]),
     PinButton( 50, 550, 'f', button_font, red, off, 150,  30, 64,  0, pins7[5]),
 
-    CharButton(300, 150, '0', button_font, off, 50, 50, 20, 10),
-    CharButton(360, 150, '1', button_font, off, 50, 50, 20, 10),
-    CharButton(420, 150, '2', button_font, off, 50, 50, 20, 10),
-    CharButton(480, 150, '3', button_font, off, 50, 50, 20, 10),
-    CharButton(540, 150, '4', button_font, off, 50, 50, 20, 10),
+    CharButton(300, 150, '0', button_font, off, 50, 50, 20, 10, 0b1111110),
+    CharButton(360, 150, '1', button_font, off, 50, 50, 20, 10, 0b0010100),
+    CharButton(420, 150, '2', button_font, off, 50, 50, 20, 10, 0b1011011),
+    CharButton(480, 150, '3', button_font, off, 50, 50, 20, 10, 0b1010111),
+    CharButton(540, 150, '4', button_font, off, 50, 50, 20, 10, 0b0110101),
 
-    CharButton(300, 210, '5', button_font, off, 50, 50, 20, 10),
-    CharButton(360, 210, '6', button_font, off, 50, 50, 20, 10),
-    CharButton(420, 210, '7', button_font, off, 50, 50, 20, 10),
-    CharButton(480, 210, '8', button_font, off, 50, 50, 20, 10),
-    CharButton(540, 210, '9', button_font, off, 50, 50, 20, 10),
+    CharButton(300, 210, '5', button_font, off, 50, 50, 20, 10, 0b1100111),
+    CharButton(360, 210, '6', button_font, off, 50, 50, 20, 10, 0b1101111),
+    CharButton(420, 210, '7', button_font, off, 50, 50, 20, 10, 0b1010100),
+    CharButton(480, 210, '8', button_font, off, 50, 50, 20, 10, 0b1111111),
+    CharButton(540, 210, '9', button_font, off, 50, 50, 20, 10, 0b1110111),
 ]
+
+# Set up the CharButton class with a set of pins
+
+CharButton.pins = pins7
 
 # Event Loop
 
