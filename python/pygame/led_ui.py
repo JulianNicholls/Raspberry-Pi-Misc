@@ -144,10 +144,10 @@ buttons     = [
     PinButton( 50, 150, Pin(pins7[0], False, True), 'a', red, 150,  35, 60,  -2),
     PinButton( 33, 195, Pin(pins7[1], False, True), 'b', red,  35, 150,  7, 50),
     PinButton(188, 195, Pin(pins7[2], False, True), 'c', red,  35, 150,  7, 50),
-    PinButton( 50, 355, Pin(pins7[6], False, True), 'g', red, 150,  35, 60,  -4),
+    PinButton( 50, 355, Pin(pins7[6], False, True), 'g', red, 150,  35, 60,  -5),
     PinButton( 33, 400, Pin(pins7[3], False, True), 'd', red,  35, 150,  7, 50),
     PinButton(188, 400, Pin(pins7[4], False, True), 'e', red,  35, 150,  7, 50),
-    PinButton( 50, 560, Pin(pins7[5], False, True), 'f', red, 150,  35, 62,  -2),
+    PinButton( 50, 560, Pin(pins7[5], False, True), 'f', red, 150,  35, 64,  -1),
 ]
 
 # Event Loop
