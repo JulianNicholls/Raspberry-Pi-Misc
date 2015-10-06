@@ -15,13 +15,14 @@ class Pin(object):
 
         self.set_state()
 
-    def set_active(active = True):
+    def set_active(self, active = True):
+        """ Can be called as set_active() or set_active(True / False) """
         self.active = active
         self.set_state()
 
-    def set_inactive():
-        self.active = false
-        self.set_active()
+    def set_inactive(self):
+        """ Essentially syntactic sugar for set_active(False) """
+        self.set_active(False)
 
     def set_state(self):
         """ Set the hardware pin based on state and active low """
