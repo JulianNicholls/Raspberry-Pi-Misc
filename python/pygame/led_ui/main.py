@@ -9,8 +9,8 @@ import pygame
 import os
 import RPi.GPIO as gpio
 
-from pin import Pin
-from button import PinButton
+from pin    import Pin
+from button import PinButton, CharButton
 
 # LED pins
 
@@ -53,15 +53,6 @@ lblue   = (50, 50, 255)
 def initialise_gpio():
     gpio.setmode(gpio.BOARD)
 
-    for pin in [red_pin, amber_pin, green_pin, blue_pin, white_pin]:
-        gpio.setup(pin, gpio.OUT)
-        gpio.output(pin, gpio.LOW)
-
-    for pin in [a_pin, b_pin, c_pin, d_pin, e_pin, f_pin, g_pin]:
-        gpio.setup(pin, gpio.OUT)
-        gpio.output(pin, gpio.HIGH)     # Active Low
-
-
 def initialise_window():
     pygame.init()
     os.environ['SDL_VIDEO_WINDOW_POS'] = 'center'
@@ -92,6 +83,18 @@ buttons     = [
     PinButton( 35, 390, Pin(d_pin, False, True), 'd', button_font, red, off,  30, 150,  7, 50),
     PinButton(190, 390, Pin(e_pin, False, True), 'e', button_font, red, off,  30, 150,  7, 50),
     PinButton( 50, 550, Pin(f_pin, False, True), 'f', button_font, red, off, 150,  30, 64,  0),
+
+    CharButton(300, 150, '0', button_font, off, 50, 50, 20, 10),
+    CharButton(360, 150, '1', button_font, off, 50, 50, 20, 10),
+    CharButton(420, 150, '2', button_font, off, 50, 50, 20, 10),
+    CharButton(480, 150, '3', button_font, off, 50, 50, 20, 10),
+    CharButton(540, 150, '4', button_font, off, 50, 50, 20, 10),
+
+    CharButton(300, 210, '5', button_font, off, 50, 50, 20, 10),
+    CharButton(360, 210, '6', button_font, off, 50, 50, 20, 10),
+    CharButton(420, 210, '7', button_font, off, 50, 50, 20, 10),
+    CharButton(480, 210, '8', button_font, off, 50, 50, 20, 10),
+    CharButton(540, 210, '9', button_font, off, 50, 50, 20, 10),
 ]
 
 # Event Loop

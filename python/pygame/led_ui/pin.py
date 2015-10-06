@@ -11,6 +11,8 @@ class Pin(object):
         self.active     = active
         self.active_low = active_low
 
+        gpio.setup(self.number, gpio.OUT)
+
         self.set_state()
 
     def set_state(self):
