@@ -22,14 +22,14 @@ white_pin   = 31    # Pin Number, GPIO 6
 
 # 7-segment pins (See .../gpio/drive_7_segment.py for more details)
 
-a_pin       = 16
-b_pin       = 22
-c_pin       = 12
-d_pin       = 18
-e_pin       = 32
-f_pin       = 38
-g_pin       = 36
-p5_pin      = 35
+a_pin_num   = 16
+b_pin_num   = 22
+c_pin_num   = 12
+d_pin_num   = 18
+e_pin_num   = 32
+f_pin_num   = 38
+g_pin_num   = 36
+p5_pin_num  = 35
 
 # Sizes and stuff
 
@@ -37,14 +37,14 @@ window_size = (750, 620)
 
 # Colours
 
-blue    = (0, 0, 48)
+blue    = (  0,   0,  48)
 white   = (255, 255, 255)
-black   = (0, 0, 0) 
-off     = (32, 32, 32)
-red     = (255, 50, 50)
-amber   = (255, 255, 50)
-green   = (50, 255, 50)
-lblue   = (50, 50, 255)
+black   = (  0,   0,   0) 
+off     = ( 32,  32,  32)
+red     = (255,  50,  50)
+amber   = (255, 255,  50)
+green   = ( 50, 255,  50)
+lblue   = ( 50,  50, 255)
 
 
 #----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ def initialise_window():
     pygame.init()
     os.environ['SDL_VIDEO_WINDOW_POS'] = 'center'
 
-    pygame.display.set_caption("LED UI V2")
+    pygame.display.set_caption("LED UI V3")
 
 
 #----------------------------------------------------------------------------
@@ -69,20 +69,30 @@ initialise_window()
 screen      = pygame.display.set_mode(window_size)
 button_font = pygame.font.Font(None, 36)
 
-buttons     = [
-    PinButton( 20,  20, Pin(red_pin),   'Red',   button_font, red,   off, 120, 75, 30, 22),
-    PinButton(160,  20, Pin(amber_pin), 'Amber', button_font, amber, off, 120, 75, 22, 22),
-    PinButton(300,  20, Pin(green_pin), 'Green', button_font, green, off, 120, 75, 22, 22),
-    PinButton(440,  20, Pin(blue_pin),  'Blue',  button_font, lblue, off, 120, 75, 25, 22),
-    PinButton(580,  20, Pin(white_pin), 'White', button_font, white, off, 120, 75, 22, 22),
+pins7       = [
+    Pin(a_pin_num, False, True),
+    Pin(b_pin_num, False, True),
+    Pin(c_pin_num, False, True),
+    Pin(d_pin_num, False, True),
+    Pin(e_pin_num, False, True),
+    Pin(f_pin_num, False, True),
+    Pin(g_pin_num, False, True)
+]        
 
-    PinButton( 50, 150, Pin(a_pin, False, True), 'a', button_font, red, off, 150,  30, 60,  0),
-    PinButton( 35, 190, Pin(b_pin, False, True), 'b', button_font, red, off,  30, 150,  7, 50),
-    PinButton(190, 190, Pin(c_pin, False, True), 'c', button_font, red, off,  30, 150,  7, 50),
-    PinButton( 50, 350, Pin(g_pin, False, True), 'g', button_font, red, off, 150,  30, 60,  0),
-    PinButton( 35, 390, Pin(d_pin, False, True), 'd', button_font, red, off,  30, 150,  7, 50),
-    PinButton(190, 390, Pin(e_pin, False, True), 'e', button_font, red, off,  30, 150,  7, 50),
-    PinButton( 50, 550, Pin(f_pin, False, True), 'f', button_font, red, off, 150,  30, 64,  0),
+buttons     = [
+    PinButton( 20,  20, 'Red',   button_font, red,   off, 120, 75, 30, 22, Pin(red_pin)),
+    PinButton(160,  20, 'Amber', button_font, amber, off, 120, 75, 22, 22, Pin(amber_pin)),
+    PinButton(300,  20, 'Green', button_font, green, off, 120, 75, 22, 22, Pin(green_pin)),
+    PinButton(440,  20, 'Blue',  button_font, lblue, off, 120, 75, 25, 22, Pin(blue_pin)),
+    PinButton(580,  20, 'White', button_font, white, off, 120, 75, 22, 22, Pin(white_pin)),
+
+    PinButton( 50, 150, 'a', button_font, red, off, 150,  30, 60,  0, pins7[0]),
+    PinButton( 35, 190, 'b', button_font, red, off,  30, 150,  7, 50, pins7[1]),
+    PinButton(190, 190, 'c', button_font, red, off,  30, 150,  7, 50, pins7[2]),
+    PinButton( 50, 350, 'g', button_font, red, off, 150,  30, 60,  0, pins7[6]),
+    PinButton( 35, 390, 'd', button_font, red, off,  30, 150,  7, 50, pins7[3]),
+    PinButton(190, 390, 'e', button_font, red, off,  30, 150,  7, 50, pins7[4]),
+    PinButton( 50, 550, 'f', button_font, red, off, 150,  30, 64,  0, pins7[5]),
 
     CharButton(300, 150, '0', button_font, off, 50, 50, 20, 10),
     CharButton(360, 150, '1', button_font, off, 50, 50, 20, 10),

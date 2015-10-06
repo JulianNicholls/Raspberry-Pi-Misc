@@ -15,6 +15,14 @@ class Pin(object):
 
         self.set_state()
 
+    def set_active(active = True):
+        self.active = active
+        self.set_state()
+
+    def set_inactive():
+        self.active = false
+        self.set_active()
+
     def set_state(self):
         """ Set the hardware pin based on state and active low """
         hilo = gpio.HIGH if self.active != self.active_low else gpio.LOW

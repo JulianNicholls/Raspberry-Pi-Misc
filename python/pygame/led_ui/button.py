@@ -19,7 +19,7 @@ class Button(object):
 
     def draw(self, screen):
         """ Draw the button rectangle and its text """
-        pygame.draw.rect(screen, colour, (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(screen, self.colour, (self.x, self.y, self.width, self.height))
 
         text_surface = self.font.render(self.text, 1, white) 
         screen.blit(text_surface, (self.x + self.x_off, self.y + self.y_off))
@@ -38,7 +38,7 @@ class Button(object):
 # PinButton Class that holds a Pin reference and draws based on it.
 
 class PinButton(Button):
-    def __init__(self, x, y, pin, text, font, colour, off_colour, width, height, x_offset, y_offset):
+    def __init__(self, x, y, text, font, colour, off_colour, width, height, x_offset, y_offset, pin):
         super().__init__(x, y, text, font, colour, width, height, x_offset, y_offset) 
 
         self.pin        = pin
@@ -56,4 +56,14 @@ class PinButton(Button):
         """ Toggle the pin state """
         self.pin.toggle()
 
+
+#----------------------------------------------------------------------------
+# CharButton Class that allows for setting a whole raft of pins.
+
+class CharButton(Button):
+    def __init__(self, x, y, text, font, colour, width, height, x_offset, y_offset):
+        super().__init__(x, y, text, font, colour, width, height, x_offset, y_offset) 
+
+    def action(self):
+        print("Pressed")
 
