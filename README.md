@@ -84,13 +84,15 @@ connected to pins 11, 13, and 15 respectively.
 Turn a motor on and off connected to pin 12 via PN2222 transistor. I wrote this
 so that I could turn the motor off quickly in case I'd made a bad choice of 
 transistor or another schoolboy error. The motor is connected to the collector, 
-and powered by a wall-wart providing 6V, but I initially tried it with the 5V
-line (pin 2) on the GPIO and that was fine too. 
+and powered by a wall-wart providing a range of voltages, I tried 6V and 9V, 
+but I initially tried it with the 5V line (pin 2) on the Pi GPIO and that was
+fine too. 
 
 it turns out that my choice of transistor was OK. With pin 12 connected via a 
-1.26k resistor to the Base of the transistor, I'm drawing 2mA from the Pi.
-The motor is drawing around 120mA when running freely. I'm going to try
-stalling the motor a little to test its maximum draw.
+400 Ohm resistor to the Base of the transistor, I'm drawing less than 9mA from
+the Pi. The motor is drawing around 180mA when running freely. I'm going to try
+stalling the motor a little to test its maximum draw once I have some crocodile
+clips.
 
 
 ## python/pygame
@@ -111,6 +113,7 @@ keys to expand and contract the square that the ball is bouncing in.
 
 Display buttons that turn LEDs on and off. Five buttons turn directly connected
 LEDs on and off. Another seven buttons turn the segments of a display on and off.
+Ten more buttons display the digits 0-9 on the 7-segment display.
 
 See main.py and .../gpio/drive_7_segment for full connection details.
 

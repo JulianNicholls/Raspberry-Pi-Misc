@@ -47,6 +47,23 @@ green   = ( 50, 255,  50)
 lblue   = ( 50,  50, 255)
 
 
+# Bitmaps for displaying characters on the 7-segment display
+
+digits  = [
+    0b1111110, 0b0010100, 0b1011011, 0b1010111, 0b0110101,  # 0-4
+    0b1100111, 0b1101111, 0b1010100, 0b1111111, 0b1110111,  # 5-9
+]
+    
+letters = { # Included: ABCDEFGHIJ LNOP RS U YZ    Missing: KMQTVWX 
+    'A': 0b1111101, 'a': 0b1011111, 'b': 0b0101111, 'C': 0b1101010, 
+    'c': 0b0001011, 'd': 0b0011111, 'E': 0b1101011, 'F': 0b1101001, 
+    'g': 0b1110111, 'H': 0b0111101, 'h': 0b0101101, 'I': 0b0010100, 
+    'i': 0b0000100, 'J': 0b0010110, 'L': 0b0101010, 'n': 0b0001101, 
+    'O': 0b1111110, 'o': 0b0001111, 'P': 0b1111001, 'r': 0b0001001, 
+    'S': 0b1100111, 'U': 0b0111110, 'u': 0b0001110, 'y': 0b0110111, 
+    'Z': 0b1011011
+}
+
 #----------------------------------------------------------------------------
 # Initialisation functions
 
@@ -59,9 +76,35 @@ def initialise_window():
 
     pygame.display.set_caption("LED UI V3")
 
+def add_digit_buttons():
+    top     = 150
+    left    = 300
 
-#----------------------------------------------------------------------------
-# Main
+    for i in range(len(digits)):
+        buttons.append(CharButton(left, top, str(i), button_font, off, 50, 50, 20, 10, digits[i]))
+
+        left += 65
+
+        if left > 580:
+            left = 300
+            top += 60
+
+
+def add_letter_buttons():
+    top     = 290
+    left    = 300
+
+    for ltr in sorted(letters):
+        buttons.append(CharButton(left, top, ltr, button_font, off, 50, 50, 20, 10, letters[ltr]))
+
+        left += 65
+
+        if left > 580:
+            left = 300
+            top += 60
+
+
+#----------------------------------------------------------------------------# Main
 
 initialise_gpio()
 initialise_window()
@@ -93,19 +136,13 @@ buttons     = [
     PinButton( 35, 390, 'd', button_font, red, off,  30, 150,  7, 50, pins7[3]),
     PinButton(190, 390, 'e', button_font, red, off,  30, 150,  7, 50, pins7[4]),
     PinButton( 50, 550, 'f', button_font, red, off, 150,  30, 64,  0, pins7[5]),
-
-    CharButton(300, 150, '0', button_font, off, 50, 50, 20, 10, 0b1111110),
-    CharButton(360, 150, '1', button_font, off, 50, 50, 20, 10, 0b0010100),
-    CharButton(420, 150, '2', button_font, off, 50, 50, 20, 10, 0b1011011),
-    CharButton(480, 150, '3', button_font, off, 50, 50, 20, 10, 0b1010111),
-    CharButton(540, 150, '4', button_font, off, 50, 50, 20, 10, 0b0110101),
-
-    CharButton(300, 210, '5', button_font, off, 50, 50, 20, 10, 0b1100111),
-    CharButton(360, 210, '6', button_font, off, 50, 50, 20, 10, 0b1101111),
-    CharButton(420, 210, '7', button_font, off, 50, 50, 20, 10, 0b1010100),
-    CharButton(480, 210, '8', button_font, off, 50, 50, 20, 10, 0b1111111),
-    CharButton(540, 210, '9', button_font, off, 50, 50, 20, 10, 0b1110111),
 ]
+
+# Add buttons for the digits 0-9 and various letters
+
+add_digit_buttons()
+add_letter_buttons()
+
 
 # Set up the CharButton class with a set of pins
 
