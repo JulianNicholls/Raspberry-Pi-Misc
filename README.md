@@ -1,6 +1,6 @@
 # Raspberry Pi Miscellany
 
-Files from my initial forays into programming for the [Raspberry Pi](http://raspberrypi.org).
+Files from my forays into programming for the [Raspberry Pi](http://raspberrypi.org).
 
 
 ## c
@@ -25,7 +25,7 @@ General python programs.
 ### test_sleep
 
 Test the resolution of time.sleep(). It appears to be about 100us (microseconds),
-which is an order of magnitude (or more) better than I expoected.
+which is an order of magnitude (or more) better than I expected.
 
 
 ## python/gpio
@@ -117,6 +117,11 @@ Ten more buttons display the digits 0-9 on the 7-segment display.
 
 See main.py and .../gpio/drive_7_segment for full connection details.
 
+
+## node
+
+A Blynk library client program that updates Virtual Pin 9 with time seconds,
+responds to a slider on V1, and has a terminal on V3.
 
 ## scratch
 
