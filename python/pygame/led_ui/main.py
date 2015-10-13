@@ -123,10 +123,10 @@ pins7       = [
 ]        
 
 buttons     = [
-    PinButton( 20,  20, 'Red',   button_font, red,   off, 120, 75, 30, 22, Pin(red_pin)),
+    PinButton( 20,  20, 'Red',   button_font, red,   off, 120, 75, 31, 22, Pin(red_pin)),
     PinButton(160,  20, 'Amber', button_font, amber, off, 120, 75, 22, 22, Pin(amber_pin)),
     PinButton(300,  20, 'Green', button_font, green, off, 120, 75, 22, 22, Pin(green_pin)),
-    PinButton(440,  20, 'Blue',  button_font, lblue, off, 120, 75, 25, 22, Pin(blue_pin)),
+    PinButton(440,  20, 'Blue',  button_font, lblue, off, 120, 75, 26, 22, Pin(blue_pin)),
     PinButton(580,  20, 'White', button_font, white, off, 120, 75, 22, 22, Pin(white_pin)),
 
     PinButton( 50, 150, 'a', button_font, red, off, 150,  30, 60,  0, pins7[0]),

@@ -72,7 +72,7 @@ class CharButton(Button):
 
     def action(self):
         """ Light the segments specified in the bitmap, based on the set of pins 
-            passed """
+            set as a class variable. """
         for i in range(7):
             if self.segment_map & (64 >> i):
                 CharButton.pins[i].set_active()
