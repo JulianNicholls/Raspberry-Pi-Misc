@@ -2,6 +2,10 @@
 
 Files from my forays into programming for the [Raspberry Pi](http://raspberrypi.org).
 
+Includes programs written in C, Python, and a little Scratch. 
+
+Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame. and soon Pygame Zero.
+
 
 ## c
 
@@ -15,7 +19,7 @@ cycle value can all be set from a menu. It has been tried with an LED, a
 speaker, and a 6V motor connected to the collector side of a PN2222 transistor.
 
 Presumably, with relevant values, it would drive a servo, requiring a transistor
-for switching a higher voltage again.
+for switching a higher voltage and current again.
 
 
 ## python
@@ -93,6 +97,16 @@ it turns out that my choice of transistor was OK. With pin 12 connected via a
 the Pi. The motor is drawing around 180mA when running freely. I'm going to try
 stalling the motor a little to test its maximum draw once I have some crocodile
 clips.
+
+
+## python/gpiozero
+
+Examples using the GPIO Zero library.
+
+### button_led
+
+Using gpiozero library, switch a LED connected to GPIO17 on and off with a button
+connected to GPIO21 and a GND.
 
 
 ## python/pygame
