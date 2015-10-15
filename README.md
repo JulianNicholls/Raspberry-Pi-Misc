@@ -132,6 +132,16 @@ Ten more buttons display the digits 0-9 on the 7-segment display.
 See main.py and .../gpio/drive_7_segment for full connection details.
 
 
+## python/wiimote
+
+Examples using the python-cwiid library
+
+### wiimote
+
+An example of using a Wiimote on a Pi, displays the state of the buttons and
+the accelerometer data.
+
+
 ## node
 
 A Blynk library client program that updates Virtual Pin 9 with time seconds,
