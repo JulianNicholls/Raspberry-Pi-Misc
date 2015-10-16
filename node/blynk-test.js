@@ -8,6 +8,7 @@ var blynk = new Blynk.Blynk(AUTH, options = {
 });
 
 var value   = 0;
+
 var v1      = new blynk.VirtualPin(1);
 var v4      = new blynk.VirtualPin(4);
 var v9      = new blynk.VirtualPin(9);
@@ -28,7 +29,7 @@ v9.on('read', function() {
 
 term.on('write', function(data) {
     term.write('You wrote: ' + data + '\n');
-    blynk.notify('HAHA! ' + data);
+    blynk.notify('Blynk Terminal: ' + data);
 });
 
 blynk.on('connect', function() { console.log("Blynk ready."); });

@@ -2,7 +2,7 @@
 
 Files from my forays into programming for the [Raspberry Pi](http://raspberrypi.org).
 
-Includes programs written in C, Python, and a little Scratch. 
+Includes programs written in C, Python, Javascript, and a little Scratch. 
 
 Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame. and soon Pygame Zero.
 
@@ -11,10 +11,9 @@ Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame. and soon Pygame Zero.
 
 Use make to build the programs in here.
 
-
 ### pwm
 
-Uses the PWM pin, physical pin 12 - GPIO18. The clock divisor, range, and duty
+Uses the PWM pin, physical pin 12 (GPIO18). The clock divisor, range, and duty
 cycle value can all be set from a menu. It has been tried with an LED, a
 speaker, and a 6V motor connected to the collector side of a PN2222 transistor.
 
@@ -71,7 +70,7 @@ releases the GPIO pins by having a try...except round the main loop to trap Ctrl
 Drive a seven segment, common-anode, display. Connections can be seen inside
 the file. Currently set up for B+, assuming a 40-pin GPIO.
 
-First it shows 0-9A-F with a delay between each. Then, it shows 6 arrows pointing
+First it shows 0-F with a delay between each. Then, it shows 6 arrows pointing
 forward and back, right and left. Finally, it shows each possible letter and waits 
 for the user to press enter.
 
@@ -85,12 +84,13 @@ connected to pins 11, 13, and 15 respectively.
 
 ### motor
 
-Turn a motor on and off connected to pin 12 via PN2222 transistor. I wrote this
-so that I could turn the motor off quickly in case I'd made a bad choice of 
-transistor or another schoolboy error. The motor is connected to the collector, 
-and powered by a wall-wart providing a range of voltages, I tried 6V and 9V, 
-but I initially tried it with the 5V line (pin 2) on the Pi GPIO and that was
-fine too. 
+Turn a motor on and off connected to pin 12 via PN2222A transistor.
+
+I wrote this so that I could turn the motor off quickly in case I'd made a bad
+choice of transistor or another schoolboy error. The motor is connected to the
+collector and powered by a wall-wart providing a range of voltages, I tried 6V
+and 9V, but I initially tried it with the 5V line (pin 2) on the Pi GPIO and 
+that was fine too. 
 
 it turns out that my choice of transistor was OK. With pin 12 connected via a 
 400 Ohm resistor to the Base of the transistor, I'm drawing less than 9mA from
@@ -127,7 +127,8 @@ keys to expand and contract the square that the ball is bouncing in.
 
 Display buttons that turn LEDs on and off. Five buttons turn directly connected
 LEDs on and off. Another seven buttons turn the segments of a display on and off.
-Ten more buttons display the digits 0-9 on the 7-segment display.
+Ten more buttons display the digits 0-9 on the 7-segment display and a final 25
+buttons allow for most of the alphabet in upper or lower case.
 
 See main.py and .../gpio/drive_7_segment for full connection details.
 
@@ -139,13 +140,16 @@ Examples using the python-cwiid library
 ### wiimote
 
 An example of using a Wiimote on a Pi, displays the state of the buttons and
-the accelerometer data.
+the accelerometer data. It's a bit flaky with the £3.99 Wiimote clone that I 
+bought from eBay, and I'm hoping to try it with a genuine Nintendo one.
 
 
 ## node
 
 A Blynk library client program that updates Virtual Pin 9 with time seconds,
-responds to a slider on V1, and has a terminal on V3.
+responds to a slider on V1, updating a graph attached to V4, and has a 
+terminal on V3 which feeds back and sends notifications.
+
 
 ## scratch
 
