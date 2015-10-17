@@ -76,11 +76,11 @@ wii.rpt_mode = cwiid.RPT_BTN
 while True:
     buttons = read_buttons()
 
+#    print "Buttons: ", buttons 
+    print "State:   ", wii.state    # Show the whole Wii state
+
     if buttons == 0:
         continue
-
-#    print "Buttons: ", buttons 
-#    print "State:   ", wii.state    # Show the whole Wii state
 
     for btn in button_bits:
         if(buttons & btn):
