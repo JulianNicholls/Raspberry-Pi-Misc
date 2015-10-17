@@ -20,13 +20,13 @@ import time
 
 #   GPIO BCM Pins used
 
-rs_pin  = 7     # RS _INS/DATA
-e_pin   = 6     # E Strobe
+rs_pin  = 18          # RS _INS/DATA
+e_pin   = 23          # E Strobe
 
-db4_pin = 18    # DB4
-db5_pin = 23    # DB5
-db6_pin = 24    # DB6
-db7_pin = 25    # DB7
+db4_pin = 24        # DB4
+db5_pin = 25        # DB5
+db6_pin = 12        # DB6
+db7_pin = 16        # DB7
 
 
 # Cursor settings
