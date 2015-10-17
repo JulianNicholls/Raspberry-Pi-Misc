@@ -10,23 +10,23 @@
 # 8   DB1       Data Bus bit 1 - Not Connected
 # 9   DB2       Data Bus bit 2 - Not Connected
 #10   DB3       Data Bus bit 3 - Not Connected
-#11   DB4       Data Bus bit 4 
-#12   DB5       Data Bus bit 5 
-#13   DB6       Data Bus bit 6 
-#14   DB7       Data Bus bit 7 
+#11   DB4       Data Bus bit 4
+#12   DB5       Data Bus bit 5
+#13   DB6       Data Bus bit 6
+#14   DB7       Data Bus bit 7
 
 import RPi.GPIO as GPIO
 import time
 
-#   GPIO Pins used
+#   GPIO BCM Pins used
 
-rs_pin  = 26    # RS _INS/DATA
-e_pin   = 24    # E Strobe
+rs_pin  = 7     # RS _INS/DATA
+e_pin   = 6     # E Strobe
 
-db4_pin = 12    # DB4
-db5_pin = 16    # DB5
-db6_pin = 18    # DB6
-db7_pin = 22    # DB7
+db4_pin = 18    # DB4
+db5_pin = 23    # DB5
+db6_pin = 24    # DB6
+db7_pin = 25    # DB7
 
 
 # Cursor settings
@@ -35,13 +35,13 @@ OFF         = 0x04
 ON          = 0x06
 BLINKING    = 0x07
 
-# Set up all the above pins for output and initialise the display for 
+# Set up all the above pins for output and initialise the display for
 # 4-bit operation
 
 def setup():
     # Initialise GPIO Pins.
 
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
 
     GPIO.setup(rs_pin, GPIO.OUT)
     GPIO.setup(e_pin, GPIO.OUT)
@@ -56,7 +56,7 @@ def setup():
     write_4_ins(2)
     write_4_ins(8)      # 2-line, 5x7
     time.sleep(0.002)
-    
+
     write_4_ins(0)
     write_4_ins(0xE)    # Display on, cursor on, blink off
     time.sleep(0.002)
@@ -94,7 +94,7 @@ def set_cursor(setting):
 def set_position(y, x):
     set_address_raw(y * 0x40 + x)
 
-# Set the address in raw mode, line 0 starts at offset 0x00 and line 1 starts 
+# Set the address in raw mode, line 0 starts at offset 0x00 and line 1 starts
 # at 0x40.
 
 def set_address_raw(addr):
@@ -106,7 +106,7 @@ def say(text):
     for i in text:
         write_8_data(ord(i))
 
-# Write an 8-bit value as an instruction, just writes the top 4 bits followed 
+# Write an 8-bit value as an instruction, just writes the top 4 bits followed
 # by the bottom 4 bits
 
 def write_8_ins(value):
@@ -121,7 +121,7 @@ def write_4_ins(value):
     strobe_e()
 
 
-# Write an 8-bit value as a piece of data (text), just writes the top 4 bits 
+# Write an 8-bit value as a piece of data (text), just writes the top 4 bits
 # followed by the bottom 4 bits
 
 def write_8_data(value):
@@ -165,16 +165,16 @@ if __name__ == '__main__':
     write_8_data(0x55)  # 'U'
     write_8_data(0x50)  # 'P'
     wait = raw_input()
-    
+
     clear()
     set_address_raw(0x40)
     say("Second Line");
     wait = raw_input()
-    
+
     set_position(1, 0xD)
     say("End");
     wait = raw_input()
-    
+
     clear()
     set_cursor(ON)
     say("Cursor ON ->")
@@ -193,4 +193,4 @@ if __name__ == '__main__':
     set_cursor(OFF)
 
     release_pins()
-    
+
