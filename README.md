@@ -50,7 +50,8 @@ Makes a 1kHz (ish) tone from a speaker attached to pin 12 (GPIO18).
 ### drive_lcd
 
 A driver library for LCD displays attached to GPIO pins in a 4-bit configuration
-(see comments in the file for connection details).
+The connections have been updated and the pin numbers changed to use BCM
+numbering (see comments in the file for details).
 
 When run directly, it starts by initializing the panel and writing 'SETUP'.
 Then it waits for the user to hit enter between each of the next phases:
