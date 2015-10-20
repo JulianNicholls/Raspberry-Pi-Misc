@@ -108,6 +108,11 @@ Examples using the GPIO Zero library.
 Using gpiozero library, switch a LED connected to GPIO17 on and off with a button
 connected to GPIO21 and a GND.
 
+### puffin
+
+Emulate a Puffin crossing i.e. when a button is pressed, the traffic lights
+change back to Red and the green man comes on.
+
 
 ## python/pygame
 
