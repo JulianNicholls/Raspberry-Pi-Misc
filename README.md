@@ -152,7 +152,12 @@ Examples using the python-cwiid library
 
 An example of using a Wiimote on a Pi, displays the state of the buttons and
 the accelerometer data. It's a bit flaky with the £3.99 Wiimote clone that I
-bought from eBay, and I'm hoping to try it with a genuine Nintendo one.
+bought from eBay, It's a lot more stable with a genuine Nintendo one, the 
+rather noisy library can be squelched by using
+
+    wiimote.py 2>/dev/null
+
+if necessary.
 
 
 ## node
