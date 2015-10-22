@@ -4,7 +4,8 @@ Files from my forays into programming for the [Raspberry Pi](http://raspberrypi.
 
 Includes programs written in C, Python, Javascript, and a little Scratch.
 
-Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame. and soon Pygame Zero.
+Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame, python-cwiid, and 
+soon Pygame Zero.
 
 
 ## c
@@ -146,7 +147,8 @@ See main.py and .../gpio/drive_7_segment for full connection details.
 
 ## python/wiimote
 
-Examples using the python-cwiid library
+Examples using the python-cwiid library. 
+[The main CWiiD library information](https://help.ubuntu.com/community/CWiiD).
 
 ### wiimote
 
@@ -159,12 +161,18 @@ rather noisy library can be squelched by using
 
 if necessary.
 
+### attitude
+
+The beginning of a program to show the values returned from the accelerometers
+with the Wiimote in different orientations. I have abandoned it for now 
+because my Wiimote clone is so flaky that there's no point continuing.
+
 
 ## node
 
-A Blynk library client program that updates Virtual Pin 9 with time seconds,
-responds to a slider on V1, updating a graph attached to V4, and has a
-terminal on V3 which feeds back and sends notifications.
+A Blynk library client program that updates Virtual Pin 9 with the seconds
+from the current time, responds to a slider on V1, updating a graph attached
+to V4, and has a terminal on V3 which feeds back and sends notifications.
 
 
 ## scratch
