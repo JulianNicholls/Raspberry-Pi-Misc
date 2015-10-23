@@ -88,14 +88,10 @@ def home():
 def set_cursor(setting):
     write_8_ins(0x08 + setting)
 
-# Set the cursor position by row and then column, this only works for sure on
-# 16x2 and 20x2 displays at the moment because I don't have a 16x4 or 20x4 LCD,
-# or the docs.
-# I recall that line 2 runs on from line 0, and line 3 runs on from line 1,
-# but I don't remember whether there is any gap in addressing.
+# Set the cursor position by row and then column
 
 def set_position(y, x):
-    set_address_raw(y * 0x40 + x)
+    set_address_raw(y * 0x10 + x)
 
 # Set the address in raw mode, line 0 starts at offset 0x00 and line 1 starts
 # at 0x40.
@@ -171,12 +167,17 @@ if __name__ == '__main__':
     wait = raw_input('SETUP ')
 
     clear()
-    set_address_raw(0x40)
-    say("Second Line");
+    say('0123456789ABCDEFThird ')
+    wait = raw_input('012... ')
+
+    set_address_raw(0x10)
+    say("Second Line ");
     wait = raw_input()
 
-    set_position(1, 0xD)
-    say("End");
+    set_position(1, 0x8)
+    say("Fourth");
+    set_position(1, 0xF)
+    say("XX");
     wait = raw_input()
 
     clear()
