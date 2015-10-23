@@ -105,6 +105,10 @@ the Pi. The motor is drawing around 180mA when running freely. I'm going to try
 stalling the motor a little to test its maximum draw once I have some crocodile
 clips.
 
+### read_ldr
+
+Read a Light Dependent Resistor using the RC charge time of a capacitor. See
+comments inside for details.
 
 ## python/gpiozero
 
