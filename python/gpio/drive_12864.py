@@ -54,23 +54,22 @@ def setup():
 
     write_4_ins(2)
     write_4_ins(0)
-    time.sleep(0.002)
+    time.sleep(0.0005)
 
     write_4_ins(2)
     write_4_ins(0)
-    time.sleep(0.002)
+    time.sleep(0.0005)
 
     write_4_ins(0)
     write_4_ins(0xE)    # Display on, cursor on, blink off
-    time.sleep(0.002)
+    time.sleep(0.0005)
 
     write_4_ins(0)      # Clear display
     write_4_ins(1)
-    time.sleep(0.020)
+    time.sleep(0.012)
 
     write_4_ins(0)
     write_4_ins(6)      # Increment on, shift off
-    time.sleep(0.002)
 
 def release_pins():
     GPIO.cleanup()
@@ -88,13 +87,19 @@ def home():
 def set_cursor(setting):
     write_8_ins(0x08 + setting)
 
-# Set the cursor position by row and then column
+# Set the cursor position by row and then column, sort of.
+# Actually only every other pair of cells can be addressed, i.e.
+#   line 0:
+#   00: XX   01: XX   02: XX   03: XX   04: XX   05: XX   06: XX   07: XX
 
 def set_position(y, x):
-    set_address_raw(y * 0x10 + x)
+    lines = (0x00, 0x10, 0x08, 0x18)
+    set_address_raw(lines[y] + x)
 
-# Set the address in raw mode, line 0 starts at offset 0x00 and line 1 starts
-# at 0x40.
+# Set the address in raw mode.., The addressing is 16-bit word wise and each
+# line contains 16 characters in 8 words.
+# line 0 starts at 0x00 and line 2 is contiguous with it, starting at 0x08.
+# line 2 starts at 0x10 and line 4 is contiguous with it, starting at 0x18.
 
 def set_address_raw(addr):
     write_8_ins(0x80 + addr)
