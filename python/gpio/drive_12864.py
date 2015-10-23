@@ -94,15 +94,31 @@ def set_cursor(setting):
 
 def set_position(y, x):
     lines = (0x00, 0x10, 0x08, 0x18)
-    set_address_raw(lines[y] + x)
+    set_DDRAM_address(lines[y] + x)
 
 # Set the address in raw mode.., The addressing is 16-bit word wise and each
 # line contains 16 characters in 8 words.
 # line 0 starts at 0x00 and line 2 is contiguous with it, starting at 0x08.
 # line 2 starts at 0x10 and line 4 is contiguous with it, starting at 0x18.
 
-def set_address_raw(addr):
+def set_DDRAM_address(addr):
     write_8_ins(0x80 + addr)
+
+# Enter and leave graphics mode
+
+def set_graphics_mode():
+    write_8_ins(0x24)
+    write_8_ins(0x26)
+
+def clear_graphics_mode():
+    write_8_ins(0x24)
+    write_8_ins(0x20)
+
+# Set the GDRAM address
+
+def set_GDRAM_address(row, col):
+    write_8_ins(0x80 + row)
+    write_8_ins(0x80 + col)
 
 # Output a piece of text, no note is taken about running off the right side.
 
@@ -169,38 +185,27 @@ if __name__ == '__main__':
     write_8_data(0x55)  # 'U'
     write_8_data(0x50)  # 'P'
     write_8_data(0x20)  # ' '
+    set_cursor(OFF)
     wait = raw_input('SETUP ')
 
     clear()
-    say('0123456789ABCDEFThird ')
-    wait = raw_input('012... ')
+    set_graphics_mode()
+    wait = raw_input('Graphics Mode ')
 
-    set_address_raw(0x10)
-    say("Second Line ");
-    wait = raw_input()
+    set_graphics_mode()
+    set_GDRAM_address(0, 0)
+    write_8_data(0x55)
+    write_8_data(0x55)
+    set_GDRAM_address(2, 0)
+    write_8_data(0xaa)
+    write_8_data(0xaa)
 
-    set_position(1, 0x8)
-    say("Fourth");
-    set_position(1, 0xF)
-    say("XX");
-    wait = raw_input()
+    wait = raw_input('Checkerboard ')
 
-    clear()
-    set_cursor(ON)
-    say("Cursor ON ->")
-    wait = raw_input()
-
-    set_cursor(OFF)
-    home()
-    say("Cursor OFF->")
-    wait = raw_input()
-
-    set_cursor(BLINKING)
-    home()
-    say("Blinking  ->")
-    wait = raw_input()
-
-    set_cursor(OFF)
+    clear_graphics_mode()
+    set_DDRAM_address(0)
+    say("Out ")
+    wait = raw_input('Out of Graphics Mode ')
 
     release_pins()
 
