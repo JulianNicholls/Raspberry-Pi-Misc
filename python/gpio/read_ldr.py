@@ -28,6 +28,7 @@
 #   Indoors, dull afternoon     ~180
 #   Pointed at white LED        ~25-60
 #   Shaded                      ~10000-20000
+#   Really Dark                 ~150000-500000
 
 import RPi.GPIO as gpio
 import time
