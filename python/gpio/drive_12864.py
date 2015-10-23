@@ -54,15 +54,15 @@ def setup():
 
     write_4_ins(2)
     write_4_ins(0)
-    time.sleep(0.0005)
+    time.sleep(0.0002)
 
     write_4_ins(2)
     write_4_ins(0)
-    time.sleep(0.0005)
+    time.sleep(0.0002)
 
     write_4_ins(0)
-    write_4_ins(0xE)    # Display on, cursor on, blink off
-    time.sleep(0.0005)
+    write_4_ins(0xA)    # Display on, cursor on, blink off
+    time.sleep(0.0002)
 
     write_4_ins(0)      # Clear display
     write_4_ins(1)
@@ -70,24 +70,28 @@ def setup():
 
     write_4_ins(0)
     write_4_ins(6)      # Increment on, shift off
+    time.sleep(0.100)
 
 def release_pins():
     GPIO.cleanup()
 
-# Clear the display and home the cursor to top-left
+# Clear the display and home the cursor to top-left.
+# This function takes 1.6ms to complete.
 
 def clear():
     write_8_ins(0x01)
+    time.sleep(0.002)
 
 # Just home the cursor to the top-left without clearing the display
 
 def home():
     write_8_ins(0x02)
 
+# Set the cursor state using the values defined above: OFF, ON, BLINKING. 
 def set_cursor(setting):
     write_8_ins(0x08 + setting)
 
-# Set the cursor position by row and then column, sort of.
+# Set the text cursor position by row and then column, sort of.
 # Actually only every other pair of cells can be addressed, i.e.
 #   line 0:
 #   00: XX   01: XX   02: XX   03: XX   04: XX   05: XX   06: XX   07: XX
@@ -96,8 +100,9 @@ def set_position(y, x):
     lines = (0x00, 0x10, 0x08, 0x18)
     set_DDRAM_address(lines[y] + x)
 
-# Set the address in raw mode.., The addressing is 16-bit word wise and each
-# line contains 16 characters in 8 words.
+# Set the DDRAM (Display Data) address in raw mode..,
+# The addressing is 16-bit word wise and each line contains 16 characters
+# in 8 words.
 # line 0 starts at 0x00 and line 2 is contiguous with it, starting at 0x08.
 # line 2 starts at 0x10 and line 4 is contiguous with it, starting at 0x18.
 
@@ -106,15 +111,24 @@ def set_DDRAM_address(addr):
 
 # Enter and leave graphics mode
 
-def set_graphics_mode():
+def enter_graphics_mode():
     write_8_ins(0x24)
     write_8_ins(0x26)
 
-def clear_graphics_mode():
+def leave_graphics_mode():
     write_8_ins(0x24)
     write_8_ins(0x20)
 
-# Set the GDRAM address
+# Clear the graphics screen
+
+def clear_graphics_screen():
+    for row in range(64):    # 64 lines
+        set_GDRAM_address(row, 0)
+
+        for col in range(32):   # 16 bytes, auto-increment
+            write_8_data(0)
+
+# Set the GDRAM (Graphics Data RAM) address
 
 def set_GDRAM_address(row, col):
     write_8_ins(0x80 + row)
@@ -163,16 +177,16 @@ def write_4(value):
     GPIO.output(db6_pin, GPIO.HIGH if ((value & 4) == 4) else GPIO.LOW)
     GPIO.output(db7_pin, GPIO.HIGH if ((value & 8) == 8) else GPIO.LOW)
 
-# Strobe the E line high for a minimum of 500ns. As can be seen, it is held
-# high for 500us. It seems that asking for 500us from time.sleep() is fairly
+# Strobe the E line high for a minimum of 1200ns (1.2us). As can be seen, it is held
+# high for 200us. It seems that asking for 200us from time.sleep() is fairly
 # reasonable (see test_sleep.py for testing).
 
 def strobe_e():
-    time.sleep(0.0005)  # Limit is min 500ns, so this (500us) is plenty
+    time.sleep(0.0002)  # Limit is min 1200ns, so this (200us) is plenty
     GPIO.output(e_pin, GPIO.HIGH)
-    time.sleep(0.0005)
+    time.sleep(0.0002)
     GPIO.output(e_pin, GPIO.LOW)
-    time.sleep(0.0005)
+    time.sleep(0.0002)
 
 
 
@@ -182,28 +196,57 @@ if __name__ == '__main__':
     write_8_data(0x53)  # 'S'
     write_8_data(0x45)  # 'E'
     write_8_data(0x54)  # 'T'
+    write_8_data(0x20)  # ' '
     write_8_data(0x55)  # 'U'
     write_8_data(0x50)  # 'P'
-    write_8_data(0x20)  # ' '
-    set_cursor(OFF)
     wait = raw_input('SETUP ')
 
     clear()
-    set_graphics_mode()
-    wait = raw_input('Graphics Mode ')
+    enter_graphics_mode()
+    wait = raw_input('Into Graphics Mode ')
 
-    set_graphics_mode()
+    clear_graphics_screen()
+    wait = raw_input('Clear Graphics Screen ')
+
     set_GDRAM_address(0, 0)
     write_8_data(0x55)
     write_8_data(0x55)
-    set_GDRAM_address(2, 0)
+
+    set_GDRAM_address(16, 0)
     write_8_data(0xaa)
     write_8_data(0xaa)
 
-    wait = raw_input('Checkerboard ')
+    set_GDRAM_address(32, 0)
+    write_8_data(0x55)
+    write_8_data(0x55)
 
-    clear_graphics_mode()
-    set_DDRAM_address(0)
+    set_GDRAM_address(48, 0)
+    write_8_data(0xaa)
+    write_8_data(0xaa)
+
+    set_GDRAM_address(63, 0)
+    write_8_data(0xaa)
+    write_8_data(0xaa)
+    wait = raw_input('Checkerboards ')
+
+#    set_GDRAM_address(10, 1)
+#    write_8_data(0xff)
+#    write_8_data(0xff)
+#    set_GDRAM_address(10, 4)
+#    write_8_data(0xff)
+#    write_8_data(0xff)
+#    set_GDRAM_address(10, 8)
+#    write_8_data(0xff)
+#    write_8_data(0xff)
+#    set_GDRAM_address(10, 12)
+#    write_8_data(0xff)
+#    write_8_data(0xff)
+#
+#    wait = raw_input('Lines ')
+
+    leave_graphics_mode()
+    clear()
+    set_cursor(OFF)
     say("Out ")
     wait = raw_input('Out of Graphics Mode ')
 
