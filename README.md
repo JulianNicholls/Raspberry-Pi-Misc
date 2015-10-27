@@ -61,6 +61,11 @@ position the cursor to the beginning of the second line and write
 the cursor is shown, hidden, and set blinking before finally waiting for
 the user to hit enter again and then disconnecting from GPIO.
 
+### drive_12864
+
+Drive a slightly strange 128x64 display. It seems that most either have an I2C or SPI interface 
+or 8 data bits and 2 chip selects.
+
 ### lcd_clock
 
 Displays a clock on the first line of a connected LCD display using the drive_lcd
