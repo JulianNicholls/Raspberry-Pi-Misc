@@ -20,8 +20,8 @@ import time
 
 #   GPIO BCM Pins used
 
-rs_pin  = 16          # RS _INS/DATA
-e_pin   = 12          # E Strobe
+rs_pin  = 16        # RS _INS/DATA
+e_pin   = 12        # E Strobe
 
 db4_pin = 25        # DB4
 db5_pin = 24        # DB5
@@ -128,11 +128,23 @@ def clear_graphics_screen():
         for col in range(32):   # 16 bytes, auto-increment
             write_8_data(0)
 
-# Set the GDRAM (Graphics Data RAM) address
+# Set the GDRAM (Graphics Data RAM) address.
+#
+# Addressing is 16-bit word-wise and explained below.
+#
+#        x0-7 x8-f
+#       +----+----+     +----+
+# y0-1f |    |    |     |    |
+#       +----+----+     +----+
+#                       |    | 
+#                       +----+
 
 def set_GDRAM_address(row, col):
-    write_8_ins(0x80 + row)
-    write_8_ins(0x80 + col)
+    y = 0x80 | (row & ~0x20)
+    x = 0x80 | ((row & 0x20) >> 2) | col
+
+    write_8_ins(y)
+    write_8_ins(x)
 
 # Output a piece of text, no note is taken about running off the right side.
 
@@ -203,46 +215,50 @@ if __name__ == '__main__':
 
     clear()
     enter_graphics_mode()
-    wait = raw_input('Into Graphics Mode ')
+    wait = raw_input('In Graphics Mode, about to clear ')
 
     clear_graphics_screen()
-    wait = raw_input('Clear Graphics Screen ')
+    wait = raw_input('Cleared, Adding checkerboards ')
 
     set_GDRAM_address(0, 0)
-    write_8_data(0x55)
-    write_8_data(0x55)
+    write_8_data(0xaa)
+    write_8_data(0xaa)
 
     set_GDRAM_address(16, 0)
     write_8_data(0xaa)
     write_8_data(0xaa)
 
     set_GDRAM_address(32, 0)
-    write_8_data(0x55)
-    write_8_data(0x55)
+    write_8_data(0xaa)
+    write_8_data(0xaa)
 
     set_GDRAM_address(48, 0)
+    write_8_data(0xaa)
+    write_8_data(0xaa)
+
+    set_GDRAM_address(48, 4)
     write_8_data(0xaa)
     write_8_data(0xaa)
 
     set_GDRAM_address(63, 0)
     write_8_data(0xaa)
     write_8_data(0xaa)
-    wait = raw_input('Checkerboards ')
+    wait = raw_input('Checkerboards, adding lines ')
 
-#    set_GDRAM_address(10, 1)
-#    write_8_data(0xff)
-#    write_8_data(0xff)
-#    set_GDRAM_address(10, 4)
-#    write_8_data(0xff)
-#    write_8_data(0xff)
-#    set_GDRAM_address(10, 8)
-#    write_8_data(0xff)
-#    write_8_data(0xff)
-#    set_GDRAM_address(10, 12)
-#    write_8_data(0xff)
-#    write_8_data(0xff)
-#
-#    wait = raw_input('Lines ')
+    set_GDRAM_address(10, 1)
+    write_8_data(0xff)
+    write_8_data(0xff)
+    set_GDRAM_address(10, 5)
+    write_8_data(0xff)
+    write_8_data(0xff)
+    set_GDRAM_address(10, 9)    # This is not right, it becomes (42, 1), I think
+    write_8_data(0xff)
+    write_8_data(0xff)
+    set_GDRAM_address(10, 13)   # This is not right, it becomes (42, 5), I think
+    write_8_data(0xff)
+    write_8_data(0xff)
+
+    wait = raw_input('Lines, exiting ')
 
     leave_graphics_mode()
     clear()
