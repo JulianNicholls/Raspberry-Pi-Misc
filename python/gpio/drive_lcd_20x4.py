@@ -95,17 +95,19 @@ def home():
 def set_cursor(setting):
     write_8_ins(0x08 + setting)
 
-# Set the cursor position by row and then column, this only works for sure on
-# 16x2 and 20x2 displays at the moment because I don't have a 16x4 or 20x4 LCD,
-# or the docs.
-# I recall that line 2 runs on from line 0, and line 3 runs on from line 1,
-# but I don't remember whether there is any gap in addressing.
+# Set the cursor position by row and then column,
 
 def set_position(y, x):
-    set_address_raw(y * 0x40 + x)
+    lines = (0x00, 0x40, 0x14, 0x54)
+    set_address_raw(lines[y] + x)
 
-# Set the address in raw mode, line 0 starts at offset 0x00 and line 1 starts
-# at 0x40.
+# Set the address in raw mode,
+# Addressing is thus:
+
+#   Line 0:   0x00
+#   Line 1:   0x40
+#   Line 2:   0x14    i.e. run-on from line 0
+#   Line 2:   0x54    i.e. run-on from line 2
 
 def set_address_raw(addr):
     write_8_ins(0x80 + addr)
@@ -178,28 +180,45 @@ if __name__ == '__main__':
     wait = raw_input('Set up ')
 
     clear()
+    set_address_raw(0x00)
+    say("First Line");
     set_address_raw(0x40)
     say("Second Line");
-    wait = raw_input()
+    set_address_raw(0x14)
+    say("Third Line");
+    set_address_raw(0x54)
+    say("Fourth Line");
+    wait = raw_input('Raw Addressing ')
 
-    set_position(1, 0xD)
-    say("End");
-    wait = raw_input()
+    clear()
+    set_position(0, 4)
+    say("1st Line");
+    set_position(1, 0)
+    say("2nd Line");
+    set_position(2, 1)
+    say("3rd Line");
+    set_position(3, 2)
+    say("4th Line");
+    wait = raw_input('Position Addressing ')
+
+    set_position(1, 15)
+    say("2 End");
+    wait = raw_input('End ')
 
     clear()
     set_cursor(ON)
     say("Cursor ON ->")
-    wait = raw_input()
+    wait = raw_input('Cursor ')
 
     set_cursor(OFF)
     home()
     say("Cursor OFF->")
-    wait = raw_input()
+    wait = raw_input('Cursor ')
 
     set_cursor(BLINKING)
     home()
     say("Blinking  ->")
-    wait = raw_input()
+    wait = raw_input('Cursor ')
 
     set_cursor(OFF)
 

@@ -61,10 +61,15 @@ position the cursor to the beginning of the second line and write
 the cursor is shown, hidden, and set blinking before finally waiting for
 the user to hit enter again and then disconnecting from GPIO.
 
+### drive_lcd_20x4
+
+An updated version of the drive_lcd program, specifically for a 20x4 display.
+There is more cursor addressing in this one to reflect the extra lines.
+
 ### drive_12864
 
 Drive a slightly strange 128x64 display. It seems that most either have an I2C or SPI interface 
-or 8 data bits and 2 chip selects.
+or 8 data bits and 2 chip selects. The one I bought has strange GDRAM addressing instead.
 
 ### lcd_clock
 
@@ -105,7 +110,7 @@ and 9V, but I initially tried it with the 5V line (pin 2) on the Pi GPIO and
 that was fine too.
 
 it turns out that my choice of transistor was OK. With pin 12 connected via a
-400 Ohm resistor to the Base of the transistor, I'm drawing less than 9mA from
+4K Ohm resistor to the Base of the transistor, I'm drawing less than 1mA from
 the Pi. The motor is drawing around 180mA when running freely. I'm going to try
 stalling the motor a little to test its maximum draw once I have some crocodile
 clips.
