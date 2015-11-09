@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # 128x64 
 
 # 1   Vss       Ground
@@ -20,6 +22,8 @@ import time
 
 #   GPIO BCM Pins used
 
+rst_pin = 20        # RST Pin
+
 rs_pin  = 16        # RS _INS/DATA
 e_pin   = 12        # E Strobe
 
@@ -38,17 +42,29 @@ BLINKING    = 0x07
 # Set up all the above pins for output and initialise the display for
 # 4-bit operation
 
+gdram_words = [0]
+
 def setup():
+    global gdram_words
+
     # Initialise GPIO Pins.
 
     GPIO.setmode(GPIO.BCM)
 
+    GPIO.setup(rst_pin, GPIO.OUT)
     GPIO.setup(rs_pin, GPIO.OUT)
     GPIO.setup(e_pin, GPIO.OUT)
     GPIO.setup(db4_pin, GPIO.OUT)
     GPIO.setup(db5_pin, GPIO.OUT)
     GPIO.setup(db6_pin, GPIO.OUT)
     GPIO.setup(db7_pin, GPIO.OUT)
+
+    # Pulse the reset low to reset the LCD
+
+    GPIO.output(rst_pin, GPIO.LOW)
+    time.sleep(0.2)
+    GPIO.output(rst_pin, GPIO.HIGH)
+    time.sleep(0.2)
 
     # Set up LCD interface
 
@@ -61,7 +77,7 @@ def setup():
     time.sleep(0.0002)
 
     write_4_ins(0)
-    write_4_ins(0xA)    # Display on, cursor on, blink off
+    write_4_ins(0xE)    # Display on, cursor on, blink off
     time.sleep(0.0002)
 
     write_4_ins(0)      # Clear display
@@ -71,6 +87,14 @@ def setup():
     write_4_ins(0)
     write_4_ins(6)      # Increment on, shift off
     time.sleep(0.100)
+
+    # Set up map of words
+
+    gdram_words = [0]
+
+    for i in range(511):
+        gdram_words.append(0)
+
 
 def release_pins():
     GPIO.cleanup()
@@ -88,6 +112,7 @@ def home():
     write_8_ins(0x02)
 
 # Set the cursor state using the values defined above: OFF, ON, BLINKING. 
+
 def set_cursor(setting):
     write_8_ins(0x08 + setting)
 
@@ -122,11 +147,29 @@ def leave_graphics_mode():
 # Clear the graphics screen
 
 def clear_graphics_screen():
-    for row in range(64):    # 64 lines
-        set_GDRAM_address(row, 0)
+    global gdram_words
 
-        for col in range(32):   # 16 bytes, auto-increment
+    for row in range(32):    # 64 lines
+        set_GDRAM_address(0, row)
+
+        for col in range(16):   # 16 bytes, auto-increment
             write_8_data(0)
+            write_8_data(0)
+            gdram_words[row * 16 + col] = 0
+
+
+def set_pixel(x, y):
+    global gdram_words
+
+    bit  = 0x8000 >> (x & 0x0f)
+    byte = (y * 8) + (x >> 4)
+    gdram_words[byte] |= bit
+
+    # print("Byte {0}, bit {1:4x}, value: {2:4x}".format(byte, bit, gdram_words[byte]))
+
+    set_GDRAM_address(x >> 4, y)
+    write_8_data(gdram_words[byte] >> 8)
+    write_8_data(gdram_words[byte] & 0xff)
 
 # Set the GDRAM (Graphics Data RAM) address.
 #
@@ -139,7 +182,7 @@ def clear_graphics_screen():
 #                       |    | 
 #                       +----+
 
-def set_GDRAM_address(row, col):
+def set_GDRAM_address(col, row):
     y = 0x80 | (row & ~0x20)
     x = 0x80 | ((row & 0x20) >> 2) | col
 
@@ -205,66 +248,37 @@ def strobe_e():
 if __name__ == '__main__':
     setup()
 
+    clear()
+
     write_8_data(0x53)  # 'S'
     write_8_data(0x45)  # 'E'
     write_8_data(0x54)  # 'T'
     write_8_data(0x20)  # ' '
     write_8_data(0x55)  # 'U'
     write_8_data(0x50)  # 'P'
-    wait = raw_input('SETUP ')
+    wait = input('SET UP ')
 
     clear()
     enter_graphics_mode()
-    wait = raw_input('In Graphics Mode, about to clear ')
+    wait = input('In Graphics Mode, about to clear ')
 
     clear_graphics_screen()
-    wait = raw_input('Cleared, Adding checkerboards ')
+    wait = input('Cleared, Adding lines ')
 
-    set_GDRAM_address(0, 0)
-    write_8_data(0xaa)
-    write_8_data(0xaa)
+    for y in range(4):
+        for x in range(4):
+            set_pixel(x, y)
+            set_pixel(x + 8, y)
+            set_pixel(x + 16, y)
+            set_pixel(x + 24, y)
 
-    set_GDRAM_address(16, 0)
-    write_8_data(0xaa)
-    write_8_data(0xaa)
-
-    set_GDRAM_address(32, 0)
-    write_8_data(0xaa)
-    write_8_data(0xaa)
-
-    set_GDRAM_address(48, 0)
-    write_8_data(0xaa)
-    write_8_data(0xaa)
-
-    set_GDRAM_address(48, 4)
-    write_8_data(0xaa)
-    write_8_data(0xaa)
-
-    set_GDRAM_address(63, 0)
-    write_8_data(0xaa)
-    write_8_data(0xaa)
-    wait = raw_input('Checkerboards, adding lines ')
-
-    set_GDRAM_address(10, 1)
-    write_8_data(0xff)
-    write_8_data(0xff)
-    set_GDRAM_address(10, 5)
-    write_8_data(0xff)
-    write_8_data(0xff)
-    set_GDRAM_address(10, 9)    # This is not right, it becomes (42, 1), I think
-    write_8_data(0xff)
-    write_8_data(0xff)
-    set_GDRAM_address(10, 13)   # This is not right, it becomes (42, 5), I think
-    write_8_data(0xff)
-    write_8_data(0xff)
-
-    wait = raw_input('Lines, exiting ')
+    wait = input('Lines, exiting ')
 
     leave_graphics_mode()
     clear()
     set_cursor(OFF)
     say("Out ")
-    wait = raw_input('Out of Graphics Mode ')
+    wait = input('Out of Graphics Mode ')
 
     release_pins()
 
