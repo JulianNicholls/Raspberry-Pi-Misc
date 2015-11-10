@@ -29,7 +29,8 @@ General python programs.
 ### test_sleep
 
 Test the resolution of time.sleep(). It appears to be about 100us (microseconds),
-which is an order of magnitude (or more) better than I expected.
+which is an order of magnitude (or more) better than I expected. time.sleep(n)
+ALWAYS sleeps for at least the time specified.
 
 
 ## python/gpio
@@ -68,8 +69,9 @@ There is more cursor addressing in this one to reflect the extra lines.
 
 ### drive_12864
 
-Drive a slightly strange 128x64 display. It seems that most either have an I2C or SPI interface 
-or 8 data bits and 2 chip selects. The one I bought has strange GDRAM addressing instead.
+Drive a slightly strange 128x64 display. It seems that most either have an
+I2C or SPI interface, or 8 data bits and 2 chip selects. The one I bought has 
+strange GDRAM addressing instead.
 
 ### lcd_clock
 
@@ -120,19 +122,26 @@ clips.
 Read a Light Dependent Resistor using the RC charge time of a capacitor. See
 comments inside for details.
 
+
 ## python/gpiozero
 
 Examples using the GPIO Zero library.
 
 ### button_led
 
-Using gpiozero library, switch a LED connected to GPIO17 on and off with a button
-connected to GPIO21 and a GND.
+Using gpiozero library, switch a LED connected to GPIO17 on and off with a 
+button connected to GPIO21 and a GND.
 
 ### puffin
 
-Emulate a Puffin crossing i.e. when a button is pressed, the traffic lights
-change back to Red and the green man comes on.
+Emulate a complete British Puffin crossing. It has Red, Amber, and Green LEDs
+for the cars, obviously. It uses a Red and Green LED for walk / don't walk 
+for pedestrians. It also uses another Red LED to indicate that the crossing
+request button has been acknowledged. 
+
+### rgd_led
+
+Drive a common-cathode RGB LED.
 
 
 ## python/pygame
