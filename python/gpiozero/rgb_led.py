@@ -6,67 +6,61 @@ from time import sleep
 led = RGBLED(18, 23, 24) 
 
 colours = [
-    (1, 0, 0), (0, 1, 0), (0, 0, 1),
-    (1, 1, 0), (1, 0, 1), (0, 1, 1)
+    (1, 0, 0),
+    (1, 0.55, 0),
+    (0.7, 0.7, 0), 
+    (0, 1, 0),
+    (0, 0.7, 0.7),
+    (0, 0, 1),
+    (0.7, 0, 0.7)
+
 ]
+
+def constrain(low, high, value):
+    return max(low, min(high, value))
+
+def fade_out(led, time):
+    steps = 20
+    delay = time / steps
+    delta = max(led.red, led.green, led.blue) / steps
+
+    while led.red > delta or led.green > delta or led.blue > delta:
+        if led.red >= delta:
+            led.red -= delta
+
+        if led.green >= delta:
+            led.green -= delta
+
+        if led.blue >= delta:
+            led.blue -= delta
+    
+        sleep(delay)
+    
+def fade_to(led, colour, time):
+    steps = 20
+    delay = time / steps
+
+    dred   = (colour[0] - led.red) / steps
+    dgreen = (colour[1] - led.green) / steps
+    dblue  = (colour[2] - led.blue) / steps
+    
+    for i in range(steps):
+        led.red   = constrain(0, 1, led.red   + dred)
+        led.green = constrain(0, 1, led.green + dgreen)
+        led.blue  = constrain(0, 1, led.blue  + dblue)
+        
+        sleep(delay)
+
+    led.color = colour
 
 led.on()
 sleep(1)
 
 for rgb in colours:
-    led.color = rgb
+    fade_to(led, rgb, 1)
     sleep(1)
 
-red = 0.5
-dred = -0.1
-
-blue = 0.5
-dblue = 0.1
-
-green = 0
-dgreen = 0.1
-
-for i in range(300):
-    led.color = (red, green, blue)
-    sleep(0.02)
-
-    if i % 3 == 0:
-        red += dred
-        if red > 1:
-            red = 1
-            dred = -dred
-        elif red < 0:
-            red = 0
-            dred = -dred
-
-    if i % 3 == 1:
-        green += dgreen
-        if green > 1:
-            green = 1
-            dgreen = -dgreen
-        elif green < 0:
-            green = 0
-            dgreen = -dgreen
-    else:
-        blue += dblue
-        if blue > 1:
-            blue = 1
-            dblue = -dblue
-        elif blue < 0:
-            blue = 0
-            dblue = -dblue
-
-# fade out
-
-while red > 0 or green > 0 or blue > 0:
-    led.color=(max(red, 0), max(green, 0), max(blue, 0))
-
-    red -= 0.05
-    green -= 0.05
-    blue -= 0.05
-
-    sleep(0.02)
-
+fade_out(led, 1)
 
 led.off()
 
