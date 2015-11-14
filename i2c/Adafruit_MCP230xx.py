@@ -204,10 +204,10 @@ if __name__ == '__main__':
 
     # Read input pin and display the results
     last_i3 = mcp.input_01(3) 
-    print "Pin 3 = %d" % last_i3
+    print("Pin 3 = %d" % last_i3)
 
     # Python speed test on output 0 toggling at max speed
-    print "Starting blinky on pin 0 (CTRL+C to quit)"
+    print("Starting blinky on pin 0 (CTRL+C to quit)")
     while (True):
       mcp.output(0, 1)  # Pin 0 High
       time.sleep(0.1);
@@ -216,6 +216,6 @@ if __name__ == '__main__':
 
       i3 = mcp.input_01(3)
       if i3 != last_i3:
-          print "Input: ", i3
+          print("Input: ", i3)
           last_i3 = i3
 
