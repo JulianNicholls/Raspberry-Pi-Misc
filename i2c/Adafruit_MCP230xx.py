@@ -23,7 +23,10 @@
 from Adafruit_I2C import Adafruit_I2C
 import smbus
 import time
-import time
+
+MCP23008_GPIOA  = 0x09
+MCP23008_GPPUA  = 0x06
+MCP23008_OLATA  = 0x0A
 
 MCP23017_IODIRA = 0x00
 MCP23017_IODIRB = 0x01
@@ -33,9 +36,6 @@ MCP23017_GPPUA  = 0x0C
 MCP23017_GPPUB  = 0x0D
 MCP23017_OLATA  = 0x14
 MCP23017_OLATB  = 0x15
-MCP23008_GPIOA  = 0x09
-MCP23008_GPPUA  = 0x06
-MCP23008_OLATA  = 0x0A
 
 class Adafruit_MCP230XX(object):
     OUTPUT = 0
@@ -165,17 +165,23 @@ class MCP230XX_GPIO(object):
     IN = 1
     BCM = 0
     BOARD = 0
+
     def __init__(self, busnum, address, num_gpios):
         self.chip = Adafruit_MCP230XX(address, num_gpios, busnum)
+
     def setmode(self, mode):
         # do nothing
         pass
+
     def setup(self, pin, mode):
         self.chip.config(pin, mode)
+
     def input(self, pin):
         return self.chip.input(pin)
+
     def output(self, pin, value):
         self.chip.output(pin, value)
+
     def pullup(self, pin, value):
         self.chip.pullup(pin, value)
 
