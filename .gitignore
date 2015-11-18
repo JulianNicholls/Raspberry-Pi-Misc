@@ -2,4 +2,5 @@
 *.bak
 .*.swp
 *.pyc
+pwm
 

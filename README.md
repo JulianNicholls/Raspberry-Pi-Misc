@@ -21,6 +21,9 @@ speaker, and a 6V motor connected to the collector side of a PN2222 transistor.
 Presumably, with relevant values, it would drive a servo, requiring a transistor
 for switching a higher voltage and current again.
 
+The frequencies quoted in the program have now been checked with a multimeter that
+has a frequency function.
+
 
 ## python
 
@@ -189,6 +192,33 @@ if necessary.
 The beginning of a program to show the values returned from the accelerometers
 with the Wiimote in different orientations. I have abandoned it for now 
 because my Wiimote clone is so flaky that there's no point continuing.
+
+
+## python/robot
+
+These are programs to drive a robot based on the CamJam EduKit 3.
+
+### 2-motors 
+
+Turn on both motors in one direction for 2 seconds. 
+
+### raise_7890
+
+Turn on all 4 lines. I was having trouble with the supplied driver board, so I 
+needed to turn on all 4 line that the H-bridge driver board uses so that I 
+could connect my multimeter and see if there was voltage.
+
+### 4-line
+
+Read the line-following sensor. Returns low (0V) for Black, and high (3.3V)
+for white. It works at a distance of ~2.5cm (~1").
+
+### 5-distance
+
+Read the ultrasonic distance sensor. This returns high for a certain amount 
+of time, based on the echo flight time. This is then turned into a distance 
+in cm. A voltage divider is necessary to connect this to a Ras Pi because it 
+is a 5V peripheral. 
 
 
 ## node
