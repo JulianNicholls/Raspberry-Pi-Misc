@@ -39,6 +39,30 @@ double frequency(int clock, int range)
 }
 
 /****************************************************************************
+ * Clock Frequency
+ */
+
+char* freq_text(double freq)
+{
+    static char text[12];
+
+    if(freq < 5000.0)
+    {
+        sprintf(text, "%.2f ", freq);
+    }
+    else if(freq < 1000000.0)
+    {
+        sprintf(text, "%.2f k", freq / 1000.0);
+    }
+    else
+    {
+        sprintf(text, "%.2f M", freq / 1000000.0);
+    }
+
+    return text;
+}
+
+/****************************************************************************
  * Menu
  */
 
@@ -53,7 +77,7 @@ void menu(void)
 
 // Set up initial values
 
-    pwmSetMode(PWM_MODE_MS);
+    pwmSetMode(PWM_MODE_MS);    // Mark / Space, rather than balanced default
     pwmSetRange(range);
     pwmSetClock(clock);
     pwmWrite(PWM_PIN, duty);
@@ -65,7 +89,7 @@ void menu(void)
         printf("\n          Pulse Width Modulation demonstration\n\n");
         printf("    1 - Toggle PWM mode:    %s\n", modes[mode]);
         printf("    2 - Set Duty Range:     %d\n", range);
-        printf("    3 - Set Clock Divisor:  %d, Frequency: %.3f Hz\n", clock, frequency(clock, range));
+        printf("    3 - Set Clock Divisor:  %d, Frequency: %sHz\n", clock, freq_text(frequency(clock, range)));
         printf("    4 - Set Duty Cycle:     %d\n", duty);
         printf("    5 - Fade in and out\n");
         printf("    6 - Exit\n\n");
