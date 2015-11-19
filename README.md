@@ -8,7 +8,7 @@ Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame, python-cwiid, and
 soon Pygame Zero.
 
 
-===
+----
 ## c
 
 Use make to build the programs in here.
@@ -26,7 +26,7 @@ The frequencies quoted in the program have now been checked with a multimeter th
 has a frequency function.
 
 
-===
+----
 ## python
 
 General python programs.
@@ -38,7 +38,7 @@ which is an order of magnitude (or more) better than I expected. time.sleep(n)
 ALWAYS sleeps for at least the time specified.
 
 
-===
+----
 ## python/gpio
 
 A few programs to flash LEDs etc.
@@ -129,7 +129,7 @@ Read a Light Dependent Resistor using the RC charge time of a capacitor. See
 comments inside for details.
 
 
-===
+----
 ## python/gpiozero
 
 Examples using the GPIO Zero library.
@@ -151,7 +151,7 @@ request button has been acknowledged.
 Drive a common-cathode RGB LED.
 
 
-===
+----
 ## python/pygame
 
 Adventures in game / UI programming.
@@ -166,7 +166,7 @@ Bounce a ball around in a box with a bouncy sound on each bounce. Use the cursor
 keys to expand and contract the square that the ball is bouncing in.
 
 
-===
+----
 ## python/pygame/led_ui
 
 Display buttons that turn LEDs on and off. Five buttons turn directly connected
@@ -177,7 +177,7 @@ buttons allow for most of the alphabet in upper or lower case.
 See main.py and .../gpio/drive_7_segment for full connection details.
 
 
-===
+----
 ## python/wiimote
 
 Examples using the python-cwiid library. 
@@ -201,7 +201,7 @@ with the Wiimote in different orientations. I have abandoned it for now
 because my Wiimote clone is so flaky that there's no point continuing.
 
 
-===
+----
 ## python/robot
 
 These are programs to drive a robot based on the CamJam EduKit 3.
@@ -230,7 +230,7 @@ A voltage divider is necessary to connect this to a Ras Pi because it is a 5V
 peripheral. A 470R and a 330R resistor (provided in the EduKit 3) gives about 3V.
 
 
-===
+----
 ## node
 
 A Blynk library client program that updates Virtual Pin 9 with the seconds
@@ -238,7 +238,7 @@ from the current time, responds to a slider on V1, updating a graph attached
 to V4, and has a terminal on V3 which feeds back and sends notifications.
 
 
-===
+----
 ## scratch
 
 The beginnings of an alien game. N.B. I can't draw :-)
