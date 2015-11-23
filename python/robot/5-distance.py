@@ -19,7 +19,7 @@ try:
     while True:
         GPIO.output(pinTrig, False)
 
-        time.sleep(0.5)
+        time.sleep(0.01)
         
         # send 10uS pulse to trigger (Not a hope!)
         GPIO.output(pinTrig, True)
@@ -45,12 +45,11 @@ try:
 
         # Distance travelled = time * speed of sound in cms-1
 
-        distance = elapsed * 34326      # There and back
-        distance /= 2                   # One way
+        distance = elapsed * 17163      # There and back = 34326
 
         print("Distance: %.1f" % distance)
 
-        time.sleep(0.5)
+        time.sleep(0.1)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
