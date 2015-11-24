@@ -100,7 +100,7 @@ forward and back, right and left. Finally, it shows each possible letter and wai
 for the user to press enter.
 
 The simplest way to change to a common-cathode display would be to swap the names
-of segment_on() and segment_off().
+of `segment_on()` and `segment_off()`.
 
 ### traffic_lights
 
@@ -219,7 +219,7 @@ because my Wiimote clone is so flaky that there's no point continuing.
 ----
 ## python/robot
 
-These are programs to drive a robot based on the CamJam EduKit 3.
+These are programs to drive a robot based on the [CamJam Edukit 3](http://camjam.me/?page_id=1035).
 
 ### 2-motors
 
