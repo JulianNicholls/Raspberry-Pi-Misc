@@ -4,14 +4,14 @@ Files from my forays into programming for the [Raspberry Pi](http://raspberrypi.
 
 Includes programs written in C, Python, Javascript, and a little Scratch.
 
-Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame, python-cwiid, and 
+Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame, python-cwiid, and
 soon Pygame Zero.
 
 
 ----
 ## c
 
-Use make to build the programs in here.
+Use `make` to build the programs in here.
 
 ### pwm
 
@@ -33,7 +33,7 @@ General python programs.
 
 ### test_sleep
 
-Test the resolution of time.sleep(). It appears to be about 100us (microseconds),
+Test the resolution of `time.sleep()`. It appears to be about 100us (microseconds),
 which is an order of magnitude (or more) better than I expected. time.sleep(n)
 ALWAYS sleeps for at least the time specified.
 
@@ -76,14 +76,14 @@ There is more cursor addressing in this one to reflect the extra lines.
 ### drive_12864
 
 Drive a slightly strange 128x64 display. It seems that most either have an
-I2C or SPI interface, or 8 data bits and 2 chip selects. The one I bought has 
-strange GDRAM addressing instead.
+I2C or SPI interface, or 8 data bits and 2 chip selects. The one I bought is
+different, and has strange GDRAM addressing instead.
 
 ### lcd_clock
 
 Displays a clock on the first line of a connected LCD display using the drive_lcd
 library. See drive_lcd for the connection details. It ensures that it always
-releases the GPIO pins by having a try...except round the main loop to trap Ctrl-C.
+releases the GPIO pins by having a `try...except` round the main loop to trap Ctrl-C.
 
 ### delorean
 
@@ -95,7 +95,7 @@ time.
 Drive a seven segment, common-anode, display. Connections can be seen inside
 the file. Currently set up for B+, assuming a 40-pin GPIO.
 
-First it shows 0-F with a delay between each. Then, it shows 6 arrows pointing
+First, it shows 0-F with a delay between each. Then, it shows 6 arrows pointing
 forward and back, right and left. Finally, it shows each possible letter and waits
 for the user to press enter.
 
@@ -136,20 +136,33 @@ Examples using the GPIO Zero library.
 
 ### button_led
 
-Using gpiozero library, switch a LED connected to GPIO17 on and off with a 
+Using gpiozero library, switch a LED connected to GPIO17 on and off with a
 button connected to GPIO21 and a GND.
 
 ### puffin
 
 Emulate a complete British Puffin crossing. It has Red, Amber, and Green LEDs
-for the cars, obviously. It uses a Red and Green LED for walk / don't walk 
+for the cars, obviously. It uses a Red and Green LED for walk / don't walk
 for pedestrians. It also uses another Red LED to indicate that the crossing
-request button has been acknowledged. 
+request button has been acknowledged.
 
 ### rgd_led
 
 Drive a common-cathode RGB LED.
 
+### robot2
+
+Run a [CamJam Edukit 3 Robot](http://camjam.me/?page_id=1035).
+Takes input from the user:
+
+```
+f   <n>     Forward for n steps
+f   d       Forward until less than 10cm from obstacle
+b   <n>     Backward for n steps
+l   <n>     Left for n steps
+r   <n>     Right for n steps
+q           Quit
+```
 
 ----
 ## python/pygame
@@ -174,30 +187,32 @@ LEDs on and off. Another seven buttons turn the segments of a display on and off
 Ten more buttons display the digits 0-9 on the 7-segment display and a final 25
 buttons allow for most of the alphabet in upper or lower case.
 
-See main.py and .../gpio/drive_7_segment for full connection details.
+See `main.py` and `.../gpio/drive_7_segment.py` for full connection details.
 
 
 ----
 ## python/wiimote
 
-Examples using the python-cwiid library. 
+Examples using the python-cwiid library.
 [The main CWiiD library information](https://help.ubuntu.com/community/CWiiD).
 
 ### wiimote
 
 An example of using a Wiimote on a Pi, displays the state of the buttons and
 the accelerometer data. It's a bit flaky with the £3.99 Wiimote clone that I
-bought from eBay, It's a lot more stable with a genuine Nintendo one, the 
+bought from eBay, It's a lot more stable with a genuine Nintendo one, the
 rather noisy library can be squelched by using
 
+```
     wiimote.py 2>/dev/null
+```
 
 if necessary.
 
 ### attitude
 
 The beginning of a program to show the values returned from the accelerometers
-with the Wiimote in different orientations. I have abandoned it for now 
+with the Wiimote in different orientations. I have abandoned it for now
 because my Wiimote clone is so flaky that there's no point continuing.
 
 
@@ -206,15 +221,13 @@ because my Wiimote clone is so flaky that there's no point continuing.
 
 These are programs to drive a robot based on the CamJam EduKit 3.
 
-### 2-motors 
+### 2-motors
 
-Turn on both motors in one direction for 2 seconds. 
+Turn on both motors in one direction for 2 seconds.
 
-### raise_7890
+### 3-driving
 
-Turn on all 4 lines. I was having trouble with the supplied driver board, so I 
-needed to turn on all 4 line that the H-bridge driver board uses so that I 
-could connect my multimeter and see if there was voltage.
+Move forward for a second, right for a second, and then left for a second.
 
 ### 4-line
 
@@ -226,14 +239,37 @@ for white. It works at a distance of ~2.5cm (~1").
 Read the ultrasonic distance sensor. This returns high for the echo flight time.
 This is then turned into a distance in cm.
 
-A voltage divider is necessary to connect this to a Ras Pi because it is a 5V 
+A voltage divider is necessary to connect this to a Raspberry Pi because it is a 5V
 peripheral. A 470R and a 330R resistor (provided in the EduKit 3) gives about 3V.
+
+### 6-pwm
+
+Use the software PWM in the `Rpi.GPIO` library to drive forward, right, and left at
+about 30% power.
+
+### raise_7890
+
+Turn on all 4 lines. I was having trouble with the supplied H-bridge driver board,
+so I needed to turn on all 4 lines that the board uses so that I could connect my
+multimeter and see if there was voltage, which there wasn't with even one motor
+connected.
+
+**NB**: This should not be run with motors connected.
+
+
+----
+## i2c
+
+Use the Adafruit I2C library to drive a normal LED connected to the first pin,
+an RGB LED connected to the second, third, and fourth pins on a MCP23017 chip,
+changing its colour every time a button connected to the fifth I/O pin.
 
 
 ----
 ## node
 
-A Blynk library client program that updates Virtual Pin 9 with the seconds
+A [Blynk library](http://www.blynk.cc) client program that updates Virtual Pin
+9 with the seconds
 from the current time, responds to a slider on V1, updating a graph attached
 to V4, and has a terminal on V3 which feeds back and sends notifications.
 
@@ -242,4 +278,3 @@ to V4, and has a terminal on V3 which feeds back and sends notifications.
 ## scratch
 
 The beginnings of an alien game. N.B. I can't draw :-)
-
