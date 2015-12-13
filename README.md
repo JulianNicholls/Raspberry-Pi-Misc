@@ -43,7 +43,7 @@ ALWAYS sleeps for at least the time specified.
 
 A few programs to flash LEDs etc.
 
-### flash12
+### flash18
 
 Flashes an LED attached to Pin 12 (GPIO18).
 
