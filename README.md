@@ -164,6 +164,11 @@ r   <n>     Right for n steps
 q           Quit
 ```
 
+### fairy-lights
+
+Control the battery-powered fairy lights that I bought this year. It randomly 
+fades in and out and fashes at a couple of different speeds.
+
 ----
 ## python/pygame
 
