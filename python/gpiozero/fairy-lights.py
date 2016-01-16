@@ -5,7 +5,17 @@ import time
 import random
 
 led = PWMLED(18)   # GPIO Number
-# button = Button(21)
+
+# Currently, there's a bug in gpiozero which causes a problem with setting up
+# the event detection for a button.
+
+button = None
+
+while not button:
+    try:
+        button = Button(21, bounce_time=0.5)
+    except RuntimeError:
+        pass
 
 def fade_in_out():
     for i in range(3):
@@ -31,6 +41,9 @@ def fast_flash():
     led.blink(on_time=0.15, off_time=0.15, n=20, background=False)
 
 while True:
+    if button.is_pressed:
+        exit()
+
     which = random.randrange(5)
 
     if which == 0:
