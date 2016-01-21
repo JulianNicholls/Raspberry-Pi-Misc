@@ -128,6 +128,12 @@ clips.
 Read a Light Dependent Resistor using the RC charge time of a capacitor. See
 comments inside for details.
 
+### servo
+
+Drive a servo connected to pin 25 using software PWM. I don't think it's very
+practical, but that may be more to do with the low quality servo I'm using. The
+software PCM is wavering betwqeen about 47Hz and 51Hz whereas the servo really
+wants a steady 50Hz.
 
 ----
 ## python/gpiozero
