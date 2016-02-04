@@ -79,6 +79,9 @@ Drive a slightly strange 128x64 display. It seems that most either have an
 I2C or SPI interface, or 8 data bits and 2 chip selects. The one I bought is
 different, and has strange GDRAM addressing instead.
 
+It turns out that mine would work on SPI too. it works perfectly connected to
+an Arduino using the [U8glib library](https://github.com/olikraus/u8glib).
+
 ### lcd_clock
 
 Displays a clock on the first line of a connected LCD display using the drive_lcd
@@ -135,6 +138,13 @@ practical, but that may be more to do with the low quality servo I'm using. The
 software PCM is wavering betwqeen about 47Hz and 51Hz whereas the servo really
 wants a steady 50Hz.
 
+### 4x7seg / 4x7seg-ca
+
+Drive a quad 7 segment display as a clock. `4x7seg` drives a common-cathode display
+and `4x7seg-ca` drives a common-anode display. See this 
+[Raspi.TV page](http://raspi.tv/2015/how-to-drive-a-7-segment-display-directly-on-raspberry-pi-in-python)
+for wiring details.
+
 ----
 ## python/gpiozero
 
@@ -173,7 +183,7 @@ q           Quit
 ### fairy-lights
 
 Control the battery-powered fairy lights that I bought this year. It randomly 
-fades in and out and fashes at a couple of different speeds.
+fades in and out and flashes at a couple of different speeds.
 
 ----
 ## python/pygame
