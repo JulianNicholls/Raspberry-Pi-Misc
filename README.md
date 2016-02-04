@@ -19,8 +19,8 @@ Uses the PWM pin, physical pin 12 (GPIO18). The clock divisor, range, and duty
 cycle value can all be set from a menu. It has been tried with an LED, a
 speaker, and a 6V motor connected to the collector side of a PN2222 transistor.
 
-Presumably, with relevant values, it would drive a servo, requiring a transistor
-for switching a higher voltage and current again.
+I have also tried it with a servo, setting it up for 50Hz (20ms cycle time).
+The duty cycle need s to be kept very low.
 
 The frequencies quoted in the program have now been checked with a multimeter that
 has a frequency function.
@@ -135,8 +135,10 @@ comments inside for details.
 
 Drive a servo connected to pin 25 using software PWM. I don't think it's very
 practical, but that may be more to do with the low quality servo I'm using. The
-software PCM is wavering betwqeen about 47Hz and 51Hz whereas the servo really
+software PCM is wavering between about 47Hz and 51Hz whereas the servo really
 wants a steady 50Hz.
+
+To drive a servo accurately needs the hardware PCM on GPIO18, I believe.
 
 ### 4x7seg / 4x7seg-ca
 
@@ -144,6 +146,7 @@ Drive a quad 7 segment display as a clock. `4x7seg` drives a common-cathode disp
 and `4x7seg-ca` drives a common-anode display. See this 
 [Raspi.TV page](http://raspi.tv/2015/how-to-drive-a-7-segment-display-directly-on-raspberry-pi-in-python)
 for wiring details.
+
 
 ----
 ## python/gpiozero
@@ -184,6 +187,7 @@ q           Quit
 
 Control the battery-powered fairy lights that I bought this year. It randomly 
 fades in and out and flashes at a couple of different speeds.
+
 
 ----
 ## python/pygame
@@ -299,3 +303,4 @@ to V4, and has a terminal on V3 which feeds back and sends notifications.
 ## scratch
 
 The beginnings of an alien game. N.B. I can't draw :-)
+
