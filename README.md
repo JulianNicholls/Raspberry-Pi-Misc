@@ -33,9 +33,11 @@ General python programs.
 
 ### test_sleep
 
-Test the resolution of `time.sleep()`. It appears to be about 100us (microseconds),
-which is an order of magnitude (or more) better than I expected. time.sleep(n)
-ALWAYS sleeps for at least the time specified.
+Test the resolution of `time.sleep()`.
+
+It appears to be about 100us (microseconds), which is an order of magnitude 
+(or more) better than I expected. time.sleep(n) ALWAYS sleeps for at least 
+the time specified.
 
 
 ----
@@ -131,6 +133,9 @@ clips.
 Read a Light Dependent Resistor using the RC charge time of a capacitor. See
 comments inside for details.
 
+The circuit I used is a little different from the one suggested in the GPIO Zero
+documents for [Light Sensor](https://gpiozero.readthedocs.org/en/v1.1.0/api_input.html#light-sensor-ldr)
+
 ### servo
 
 Drive a servo connected to pin 25 using software PWM. I don't think it's very
@@ -140,10 +145,10 @@ wants a steady 50Hz.
 
 To drive a servo accurately needs the hardware PCM on GPIO18, I believe.
 
-### 4x7seg / 4x7seg-ca
+### clock / clock-ca
 
-Drive a quad 7 segment display as a clock. `4x7seg` drives a common-cathode display
-and `4x7seg-ca` drives a common-anode display. See this 
+Drive a quad 7 segment display as a clock. `clock` drives a common-cathode display
+and `clock-ca` drives a common-anode display. See this 
 [Raspi.TV page](http://raspi.tv/2015/how-to-drive-a-7-segment-display-directly-on-raspberry-pi-in-python)
 for wiring details.
 
@@ -185,8 +190,8 @@ q           Quit
 
 ### fairy-lights
 
-Control the battery-powered fairy lights that I bought this year. It randomly 
-fades in and out and flashes at a couple of different speeds.
+Control the battery-powered Christmas fairy lights that I bought this year. 
+It randomly fades in and out and flashes at a couple of different speeds.
 
 
 ----
@@ -279,7 +284,7 @@ so I needed to turn on all 4 lines that the board uses so that I could connect m
 multimeter and see if there was voltage, which there wasn't with even one motor
 connected.
 
-**NB**: This should not be run with motors connected.
+**NB**: *This should not be run with motors connected.*
 
 
 ----
@@ -287,7 +292,7 @@ connected.
 
 Use the Adafruit I2C library to drive a normal LED connected to the first pin,
 an RGB LED connected to the second, third, and fourth pins on a MCP23017 chip,
-changing its colour every time a button connected to the fifth I/O pin.
+changing its colour every time a button connected to the fifth I/O pin is pressed.
 
 
 ----
