@@ -84,6 +84,8 @@ different, and has strange GDRAM addressing instead.
 It turns out that mine would work on SPI too. it works perfectly connected to
 an Arduino using the [U8glib library](https://github.com/olikraus/u8glib).
 
+*See **python/st7920** below*
+
 ### lcd_clock
 
 Displays a clock on the first line of a connected LCD display using the drive_lcd
@@ -245,6 +247,18 @@ The beginning of a program to show the values returned from the accelerometers
 with the Wiimote in different orientations. I have abandoned it for now
 because my Wiimote clone is so flaky that there's no point continuing.
 
+
+----
+## python/st7920
+
+Library for a 128x64 ST7920 panel connected via SPI based on
+[Jamie Wood's ST7920 library](http://github.com/JMW95/pyST7920).
+
+### test
+
+Test the library by plotting a single pixel, drawing a rectangle, filled rectangle, 
+and reverse filled rectangle, and outputting text which shows how long each redraw
+takes (~114ms on my RPi2).
 
 ----
 ## python/robot
