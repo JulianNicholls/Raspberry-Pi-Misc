@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from st7920   import ST7920 
 from datetime import datetime
 
