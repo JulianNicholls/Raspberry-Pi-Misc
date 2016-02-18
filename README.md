@@ -258,7 +258,7 @@ Library for a 128x64 ST7920 panel connected via SPI based on
 
 Test the library by plotting a single pixel, drawing a rectangle, filled rectangle, 
 and reverse filled rectangle, and outputting text which shows how long each redraw
-takes (~114ms on my RPi2).
+takes (~114-118ms on my RPi2).
 
 ----
 ## python/robot
