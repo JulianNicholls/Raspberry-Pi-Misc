@@ -14,7 +14,7 @@ def get_internal_ip():
 
 ip = get_internal_ip()
 
-screen.rect(0, 0, 127, 20)
-screen.put_text("IP: " + str(ip), 5, 5)
+screen.rect(0, 0, 127, 16)
+screen.put_text("IP: " + str(ip), 12, 5)
 screen.redraw()
 

@@ -28,7 +28,7 @@ CLEAR       = False
 class ST7920:
     def __init__(self, rotation=UPRIGHT):
         """ Set up SPI and initialize the LCD. """
-        # Set up SPI. The clock is upped to 1.2MHz, from 125kHz.
+        # Set up SPI. The clock is upped to 1.2MHz, from the default 125kHz.
         #
         # The library on which this is based was setting the clock speed to 
         # 1.8MHz but that didn't work with my cheapo Chinese LCD.

@@ -1,6 +1,7 @@
 *~
 *.bak
 .*.swp
+.*.swo
 *.pyc
 pwm
 
