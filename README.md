@@ -260,6 +260,12 @@ Test the library by plotting a single pixel, drawing a rectangle, filled rectang
 and reverse filled rectangle, and outputting text which shows how long each redraw
 takes (~114-118ms on my RPi2).
 
+### show_ip
+
+Show the IP address on the display. This could be used on a headless Pi to show its
+address to allow logging in via SSH.
+
+
 ----
 ## python/robot
 
