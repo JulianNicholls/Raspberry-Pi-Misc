@@ -7,6 +7,9 @@ Includes programs written in C, Python, Javascript, and a little Scratch.
 Libraries used: RPi.GPIO, gpiozero, wiringPi, pygame, python-cwiid, and
 soon Pygame Zero.
 
+If anyone is interested enough in any of the below programs to read an
+expanded blog article with diagrams and more code explanation, please 
+contact me and I will write one.
 
 ----
 ## c
@@ -306,6 +309,11 @@ connected.
 
 **NB**: *This should not be run with motors connected.*
 
+
+----
+## python/atod-3202
+
+Read a MCP3202 12-bit A/D over SPI.
 
 ----
 ## i2c
