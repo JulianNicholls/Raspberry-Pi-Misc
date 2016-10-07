@@ -5,3 +5,5 @@
 *.pyc
 pwm
 
+seedhub-entry.py
+crypt-sector.py
