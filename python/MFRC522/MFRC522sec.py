@@ -6,8 +6,8 @@ import spi
 import signal
 import time
   
-class MFRC522:
-  NRSTPD = 22
+class MFRC522Sec:
+  NRSTPD = 18
   
   MAX_LEN = 16
   
@@ -107,7 +107,7 @@ class MFRC522:
     
   serNum = []
   
-  def __init__(self, dev='/dev/spidev0.0', spd=1000000, verbose = False):
+  def __init__(self, dev='/dev/spidev0.1', spd=1000000, verbose = False):
     spi.openSPI(device = dev,speed = spd)
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(self.NRSTPD, GPIO.OUT)
