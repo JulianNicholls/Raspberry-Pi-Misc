@@ -1,0 +1,14 @@
+{
+  "name": "blynk-test",
+  "version": "1.0.1",
+  "description": "Test of Blynk",
+  "main": "blynk-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Julian Nicholls",
+  "license": "ISC",
+  "dependencies": {
+    "blynk-library": "0.0.36"
+  }
+}
