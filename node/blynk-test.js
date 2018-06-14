@@ -1,37 +1,31 @@
-#!/usr/bin/env node
+const Blynk = require('blynk-library');
 
-var Blynk = require('blynk-library');
-var AUTH  = 'ff55533a7af8492e83f77a6d434cc01a';
+const AUTH ='b97354f421994b838c04b1a3517d6d56';
 
-var blynk = new Blynk.Blynk(AUTH, options = {
-    certs_path: './certs/'
+const blynk = new Blynk.Blynk(AUTH, options = {
+    connector: new Blynk.TcpClient()
 });
 
-var value   = 0;
+const v1   = new blynk.VirtualPin(1);
+const v9   = new blynk.VirtualPin(9);
+const term = new blynk.WidgetTerminal(4);
 
-var v1      = new blynk.VirtualPin(1);
-var v4      = new blynk.VirtualPin(4);
-var v9      = new blynk.VirtualPin(9);
-var term    = new blynk.WidgetTerminal(3);
+let   v1Value;
 
-v1.on('write', function(param) {
-    value = param[0];
-    console.log('V1: ', value);
+v1.on('write', (param) => {
+    v1Value = param[0];
+    console.log(`V1: ${v1Value}`);
 });
 
-v4.on('read', function() {
-    v4.write(value);
+v9.on('read', () => {
+    const seconds = new Date().getSeconds();
+
+    v9.write(`${seconds}: v1Value`);
 });
 
-v9.on('read', function() {
-    v9.write(new Date().getSeconds());
+term.on('write', (data) => {
+    term.write(`Rcv: ${data}`);
+    console.log(`Term: ${data}`);
+    blynk.notify(`TERM: ${data}`);
 });
-
-term.on('write', function(data) {
-    term.write('You wrote: ' + data + '\n');
-    blynk.notify('Blynk Terminal: ' + data);
-});
-
-blynk.on('connect', function() { console.log("Blynk ready."); });
-blynk.on('disconnect', function() { console.log("DISCONNECT"); });
 
